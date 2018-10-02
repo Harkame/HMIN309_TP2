@@ -8,11 +8,53 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  
+  <h1>Search Events</h1>
 
+  <ion-list radio-group [(ngModel)]="searchType">
+    <ion-item>
+      <ion-label>By date</ion-label>
+      <ion-radio value="By date" checked (ionSelect)="onChecked('Date')"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>By type</ion-label>
+      <ion-radio value="By type" (ionSelect)="onChecked('Type')"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="checkedType == 'Type' ">
+    <h3> Search by Type </h3>
+    <p padding-left padding-right>Select the type of events that you want to display </p>
+    <ion-searchbar placeholder="Search" showCancelButton color="danger" (ionInput)="filterItems($event)"></ion-searchbar>
+  
+    <ion-list>
+      <ion-item *ngFor="let type of types" (click)="onClickOrSearchItem(item)">
+         {{ type }}
+      </ion-item>
+    </ion-list>
+   
+  </div>
+
+  <div *ngIf="checkedType == 'Date' ">
+
+    <h3> Search by Date </h3>
+
+    <p padding-left padding-right>Select the date of events that you want to display </p>
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime [(ngModel)]="selectedDate" displayFormat="DD/MM/YYYY" (ionChange)="onSelectedDate()" #dateInput></ion-datetime>
+      <p> {{eventDate}} </p>
+    </ion-item>
+
+  </div>
+ 
+</ion-content>
+
+<ion-footer> 
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
   </p>
 
   <button ion-button secondary menuToggle>Toggle Menu</button>
-</ion-content>
+</ion-footer>
+
