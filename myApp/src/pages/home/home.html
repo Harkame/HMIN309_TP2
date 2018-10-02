@@ -22,6 +22,7 @@
     </ion-item>
   </ion-list>
 
+
   <div *ngIf="checkedType == 'Type' ">
     <h3> Search by Type </h3>
     <p padding-left padding-right>Select the type of events that you want to display </p>
@@ -31,8 +32,7 @@
       <ion-item *ngFor="let type of types" (click)="onClickOrSearchItem(item)">
          {{ type }}
       </ion-item>
-    </ion-list>
-   
+    </ion-list> 
   </div>
 
   <div *ngIf="checkedType == 'Date' ">
@@ -47,7 +47,27 @@
     </ion-item>
 
   </div>
+
+
+  <div *ngIf="lenght != 0">
+      <ion-list>
+          <button ion-item *ngFor="let event of events" (click)="itemTapped($event, item)">
+            <ion-icon [name]="item.title" item-start></ion-icon>
+            {{item.title}}
+            <div class="item-type" item-start>
+              {{item.type}}
+            </div>
+            <div class="item-description">
+              {{item.description}}
+            </div>
+            <div class="item-date" item-end>
+              {{item.date}}
+            </div>
+          </button>
+        </ion-list>
+  </div>
  
+
 </ion-content>
 
 <ion-footer> 
@@ -55,10 +75,8 @@
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
   </p>
 
-<<<<<<< HEAD
+
   <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-footer>
 
-=======
-</ion-content>
->>>>>>> 29d5bf277c80638fd14e966bbbd76f0266d630d8
+

@@ -10,7 +10,7 @@ import { CreationPage } from '../pages/creation/creation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { SQLite} from '@ionic-native/sqlite';
+//import { SQLite} from '@ionic-native/sqlite';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { SQLite} from '@ionic-native/sqlite';
   providers: [
     StatusBar,
     SplashScreen,
-    SQLite,
+   // SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

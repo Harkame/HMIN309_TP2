@@ -11,14 +11,14 @@ export class HomePage {
   @ViewChild('dateInput') dateInput;
   types: Array<string>;
   events: Array<any>;
-  allEvents: Array<any>;
+  length: any = 1;
   selectedItem: String = "None";
   selectedDate: String = "None";
   checkedType:  String = "Date";
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.allEvents = this.navParams.get('events');
+   
   }
 
   ngOnInit(): void {
@@ -55,11 +55,5 @@ export class HomePage {
     console.log(this.checkedType);
   }
 
-  setEventsArray(){
-    
-    if(this.checkedType == 'Date'){
-      
-    }
-  }
 
 }
