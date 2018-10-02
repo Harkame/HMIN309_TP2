@@ -1,0 +1,44 @@
+<!--
+  Generated template for the CreationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Creation d'un évènement</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+  <ion-item>
+    <ion-label color="primary">Titre</ion-label>
+    <ion-input [(ngModel)]="eventTitle" placeholder="Titre de mon évènement"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary">Type</ion-label>
+    <ion-input [(ngModel)]="eventType" placeholder="Type de mon évènement"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary">Description</ion-label>
+    <ion-input [(ngModel)]="eventDescription" placeholder="Description de mon évènement"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Date</ion-label>
+    <ion-datetime [(ngModel)]="eventDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <button name="button_cretion" (click)="create(eventTitle, eventType, eventDate, eventDescription)" ion-button>Créer</button>
+  </ion-item>
+</ion-list>
+
+</ion-content>

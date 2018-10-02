@@ -4,15 +4,19 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CreationPage } from '../pages/creation/creation';
 import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { SQLite} from '@ionic-native/sqlite';
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    CreationPage,
     ListPage
   ],
   imports: [
@@ -23,12 +27,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
+    CreationPage,
     ListPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
+
+
+
 export class AppModule {}
