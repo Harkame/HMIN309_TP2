@@ -9,12 +9,12 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HomePage {
 
   @ViewChild('dateInput') dateInput;
-  types: Array<string>;
+  event_types: Array<string>;
   events: Array<any>;
   length: any = 1;
-  selectedItem: String = "None";
+  selectedType: String = "None"; // selected type for the research by type
   selectedDate: String = "None";
-  checkedType:  String = "Date";
+  checkedType:  String = "Date"; // type of research 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -22,27 +22,27 @@ export class HomePage {
   }
 
   ngOnInit(): void {
-    this.setItems();
+    this.setTypes();
   }
 
-  setItems(): void {
-    this.types = ['Anniversary', 'Work', 'Family', 'Fun'];
+  setTypes(): void {
+    this.event_types = ['Anniversary', 'Work', 'Family', 'Fun'];
   }
 
   filterTypes(ev: any) {
-    this.setItems();
+    this.setTypes();
     let val = ev.target.value;
 
     if (val && val.trim() !== '') {
-      this.types = this.types.filter(function(item) {
+      this.event_types = this.event_types.filter(function(item) {
         return item.toLowerCase().includes(val.toLowerCase());
       });
     }
   }
 
-  onClickOrSearchItem(choice: any){
-    this.selectedItem = choice;
-    console.log(this.selectedItem);
+  onClickOrSearchTypes(choice: any){
+    this.selectedType = choice;
+    console.log(this.selectedType);
   }
 
   onSelectedDate(){
