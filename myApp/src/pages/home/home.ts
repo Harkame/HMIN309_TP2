@@ -14,11 +14,11 @@ export class HomePage {
   length: any = 1;
   selectedType: String = "None"; // selected type for the research by type
   selectedDate: String = "None";
-  checkedType:  String = "Date"; // type of research 
+  checkedType:  String = "Date"; // type of research
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-   
+
   }
 
   ngOnInit(): void {

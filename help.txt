@@ -1,1 +1,3 @@
 https://www.youtube.com/watch?reload=9&v=Nn5RQpZBDsg
+
+ionic cordova platform add browser

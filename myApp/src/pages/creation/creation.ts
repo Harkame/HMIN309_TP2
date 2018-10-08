@@ -4,6 +4,8 @@ import { HomePage } from '../home/home';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
+const DATABASE_FILE_NAME: string = 'event_database.db';
+
 /**
  * Generated class for the CreationPage page.
  *
@@ -18,7 +20,22 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 })
 export class CreationPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private database: SQLiteObject;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sqlite: SQLite) {
+
+    this.sqlite.create({
+      name: DATABASE_FILE_NAME,
+      location: 'default'
+    }).then((database: SQLiteObject) => {
+      console.log('database created');
+      this.database = database;
+
+
+      this.database.executeSql('CREATE TABLE IF NOT EXISTS EVENT(event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_description TEXT)');
+    }).catch(e => console.log('ERROR ' + e));
+
+
   }
 
   ionViewDidLoad() {
