@@ -7,7 +7,6 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 
 export class HomePage {
-
   @ViewChild('dateInput') dateInput;
   event_types: Array<string>;
   events: Array<any>;
@@ -18,7 +17,6 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-
   }
 
   ngOnInit(): void {

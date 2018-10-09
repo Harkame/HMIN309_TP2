@@ -11,6 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SQLite} from '@ionic-native/sqlite';
+import { DatabaseProvider } from '../providers/database/database';
 
 @NgModule({
   declarations: [
@@ -28,13 +29,14 @@ import { SQLite} from '@ionic-native/sqlite';
     MyApp,
     HomePage,
     EventPage,
-    CreationPage
+    CreationPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     SQLite,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatabaseProvider
   ]
 })
 

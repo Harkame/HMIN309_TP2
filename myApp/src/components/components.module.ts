@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CreationComponent } from './creation/creation';
 @NgModule({
-	declarations: [CreationComponent],
+	declarations: [],
 	imports: [],
-	exports: [CreationComponent]
+	exports: []
 })
 export class ComponentsModule {}
