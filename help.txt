@@ -3,3 +3,5 @@ https://www.youtube.com/watch?reload=9&v=Nn5RQpZBDsg
 ionic cordova platform add browser
 
 ionic cordova run browser
+
+https://forum.ionicframework.com/t/difference-between-a-regular-service-and-a-provider/98888
