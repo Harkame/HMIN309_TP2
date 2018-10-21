@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-  
+
   <h1>Search Events</h1>
 
   <ion-list radio-group [(ngModel)]="searchType">
@@ -27,12 +27,12 @@
     <h3> Search by Type </h3>
     <p padding-left padding-right>Select the type of events that you want to display </p>
     <ion-searchbar placeholder="Search" showCancelButton color="danger" (ionInput)="filterTypes($event)"></ion-searchbar>
-  
+
     <ion-list>
       <ion-item *ngFor="let type of event_types" (click)="onClickOrSearchTypes(item)">
          {{ type }}
       </ion-item>
-    </ion-list> 
+    </ion-list>
   </div>
 
   <div *ngIf="checkedType == 'Date' ">
@@ -66,17 +66,10 @@
           </button>
         </ion-list>
   </div>
- 
+
 
 </ion-content>
 
-<ion-footer> 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+<ion-footer>
 
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-footer>
-
-

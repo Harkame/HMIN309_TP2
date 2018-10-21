@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 const DATABASE_FILE_NAME: string = 'event_database.db';
@@ -11,9 +12,9 @@ export class DatabaseProvider
   private msqlite: SQLite;
   private database: SQLiteObject;
 
-
   constructor(public http: HttpClient, public sqlite: SQLite)
   {
+    /*
     this.sqlite.create({
       name: DATABASE_FILE_NAME,
       location: 'default'
@@ -27,6 +28,7 @@ export class DatabaseProvider
         .catch(error => console.error('ERROR : ' + error));
       })
       .catch(error => console.error('ERROR : ' + error));
+      */
   }
 
   insertEvent(eventName, eventDate, eventType, eventDescription)
