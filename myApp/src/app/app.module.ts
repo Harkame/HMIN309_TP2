@@ -16,6 +16,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite} from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
 
+import { Geolocation } from '@ionic-native/geolocation';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -41,7 +44,9 @@ import { DatabaseProvider } from '../providers/database/database';
     SplashScreen,
     SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseProvider
+    DatabaseProvider,
+    Geolocation,
+    AndroidPermissions
   ]
 })
 

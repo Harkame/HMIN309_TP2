@@ -14,7 +14,6 @@ export class DatabaseProvider
 
   constructor(public http: HttpClient, public sqlite: SQLite)
   {
-    /*
     this.sqlite.create({
       name: DATABASE_FILE_NAME,
       location: 'default'
@@ -28,17 +27,11 @@ export class DatabaseProvider
         .catch(error => console.error('ERROR : ' + error));
       })
       .catch(error => console.error('ERROR : ' + error));
-      */
   }
 
-  insertEvent(eventName, eventDate, eventType, eventDescription)
+  insertEvent(eventName, eventDate, eventType, eventDescription, eventGeolocalisationLatitude, eventGeolocalisationLongitude)
   {
-    console.log(eventName);
-    console.log(eventType);
-    console.log(eventDescription);
-    console.log(eventDate);
-
-    this.database.executeSql('INSERT INTO EVENTS (event_name, event_date, event_type, event_description) VALUES (' + eventName + ', ' + eventDate + ', ' + eventType + ', ' + eventDescription + ');', null)
+    this.database.executeSql('INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude) VALUES (' + eventName + ', ' + eventDate + ', ' + eventType + ', ' + eventDescription + ', ' + eventGeolocalisationLatitude + ', ' + eventGeolocalisationLongitude + ');', null)
     .then(() => console.log('Event inserted'))
     .catch(error => console.error('ERROR : ' + error));
   }
@@ -64,8 +57,11 @@ export class DatabaseProvider
                 title: data.rows.item(i).event_name,
                 date: data.rows.item(i).event_date,
                 type: data.rows.item(i).event_type,
-                description: data.rows.item(i).event_description });
-              }
+                description: data.rows.item(i).event_description
+                //longitude: data.rows.item(i).event_latitude
+                //latitude: data.rows.item(i).event_longitude
+              });
+            }
           return items;
         }, error => {
         console.error('Error : ', error);

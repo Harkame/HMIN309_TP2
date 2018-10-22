@@ -31,7 +31,12 @@
   </ion-item>
 
   <ion-item>
-    <button name="button_cretion" (click)="create(eventName, eventDate, eventType, eventDescription)" ion-button>Créer</button>
+   <ion-label>Geolocalisation</ion-label>
+   <ion-checkbox [(ngModel)]="eventGeolocalisationPermission"></ion-checkbox>
+ </ion-item>
+
+  <ion-item>
+    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocalisation)" ion-button>Créer</button>
   </ion-item>
 </ion-list>
 
