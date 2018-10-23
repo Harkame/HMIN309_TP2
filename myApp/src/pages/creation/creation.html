@@ -1,18 +1,19 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Creation d'un évènement</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Creation</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
   <ion-list>
   <ion-item>
-    <ion-label color="primary">Titre</ion-label>
-    <ion-input [(ngModel)]="eventName" placeholder="Nom de mon évènement"></ion-input>
+    <ion-label color="primary">Name</ion-label>
+    <ion-input [(ngModel)]="eventName" placeholder="My event"></ion-input>
   </ion-item>
 
   <ion-item>
@@ -22,21 +23,21 @@
 
   <ion-item>
     <ion-label color="primary">Type</ion-label>
-    <ion-input [(ngModel)]="eventType" placeholder="Type de mon évènement"></ion-input>
+    <ion-input [(ngModel)]="eventType" placeholder="Sport"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label color="primary">Description</ion-label>
-    <ion-input [(ngModel)]="eventDescription" placeholder="Description de mon évènement"></ion-input>
+    <ion-input [(ngModel)]="eventDescription" placeholder="Training"></ion-input>
   </ion-item>
 
   <ion-item>
-   <ion-label>Geolocalisation</ion-label>
-   <ion-checkbox [(ngModel)]="eventGeolocalisationPermission"></ion-checkbox>
+   <ion-label>Geolocation</ion-label>
+   <ion-checkbox [(ngModel)]="eventGeolocationPermission"></ion-checkbox>
  </ion-item>
 
   <ion-item>
-    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocalisation)" ion-button>Créer</button>
+    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission)" ion-button>Créer</button>
   </ion-item>
 </ion-list>
 
