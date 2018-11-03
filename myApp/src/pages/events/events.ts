@@ -7,40 +7,26 @@ import { DatabaseProvider } from '../../providers/database/database'
   selector: 'page-event',
   templateUrl: 'events.html'
 })
-export class EventPage {
+export class EventPage
+{
   selectedItem: any;
-  items: Array<{title: string, type: string, description: string, date:string}>;
+  items: Array<{title: string, type: string, date:string, description: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public databaseProvider: DatabaseProvider) {
-    // If we navigated to this page, we will have an item available as a nav param
+  constructor(private navCtrl: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
+  {
     this.selectedItem = navParams.get('item');
 
-    // Let's populate this page with some filler content for funzies
-    /*
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-    */
+    this.items = [];
 
-    this.items = this.databaseProvider.selectAllEvents();
+    this.databaseProvider.selectAllEvents(this.items);
 
-    /*
-    //Modifier les champs via accès au données de la bd.
-    for (let i = 1; i < 11; i++)
+    console.log('ITEMS : ' + this.items);
+  }
+
+  itemTapped(event, item)
+  {
+    this.navCtrl.push(EventPage,
     {
-      this.items.push(
-      {
-        title: 'Item ' + i,
-        type: "Anniversary",
-        description: "test ma gueule",
-        date: "22/02/2222"
-      });
-    }
-    */
-}
-
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(EventPage, {
       item: item
     });
   }

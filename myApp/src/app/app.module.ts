@@ -17,7 +17,9 @@ import { SQLite} from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
 
 import { Geolocation } from '@ionic-native/geolocation';
-//import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
+import { ToastController } from 'ionic-angular';
 
 @NgModule({
   declarations: [
@@ -45,8 +47,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseProvider,
-    Geolocation
-    //AndroidPermissions
+    Geolocation,
+    AndroidPermissions,
+    ToastController
   ]
 })
 
