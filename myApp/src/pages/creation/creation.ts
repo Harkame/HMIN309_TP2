@@ -10,14 +10,19 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 import { ToastController } from 'ionic-angular';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 @IonicPage()
 @Component({
   selector: 'page-creation',
   templateUrl: 'creation.html',
 })
 export class CreationPage {
-  constructor(private navCtrl: NavController, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController)
+  images: string[];
+
+  constructor(private navCtrl: NavController, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera)
   {
+    this.images = [];
   }
 
   ionViewDidLoad()
@@ -93,5 +98,26 @@ export class CreationPage {
     toast.present();
 
     this.navCtrl.setRoot(HomePage);
+  }
+
+  takePicture()
+  {
+    const options: CameraOptions =
+    {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: true
+    }
+
+    this.camera.getPicture(options).then((imageData) =>
+    {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64 (DATA_URL):
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+     // Handle error
+    });
   }
 }

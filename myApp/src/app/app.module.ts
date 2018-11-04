@@ -21,6 +21,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 import { ToastController } from 'ionic-angular';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -49,7 +51,8 @@ import { ToastController } from 'ionic-angular';
     DatabaseProvider,
     Geolocation,
     AndroidPermissions,
-    ToastController
+    ToastController,
+    Camera
   ]
 })
 
