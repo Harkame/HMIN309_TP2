@@ -36,15 +36,15 @@
    <ion-checkbox [(ngModel)]="eventGeolocationPermission"></ion-checkbox>
  </ion-item>
 
-  <ion-item>
-    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission)" ion-button>Créer</button>
-  </ion-item>
-
   <ion-item (click)="takePicture()">
     Take Picture
     <ion-icon
       item-right name="camera">
     </ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission)" ion-button>Créer</button>
   </ion-item>
 
   <img *ngFor="let image of images" src="data:image/jpeg;base64,{{image}}">
