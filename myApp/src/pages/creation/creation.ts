@@ -83,20 +83,6 @@ export class CreationPage {
 
     this.databaseProvider.insertEvent(eventName, eventDate, eventType, eventDescription, eventGeolocationLatitude, eventGeolocationLongitude);
 
-    toastMessage = 'Event created';
-
-    let toast = this.toastCtrl.create({
-      message: toastMessage,
-      duration: 3000,
-      position: 'top'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
-
     this.navCtrl.setRoot(HomePage);
   }
 

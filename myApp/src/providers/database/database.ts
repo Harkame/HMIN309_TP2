@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
+import { ToastController } from 'ionic-angular';
+
 const DATABASE_FILE_NAME: string = 'event_database.db';
 
 @Injectable()
@@ -8,7 +10,7 @@ export class DatabaseProvider
 {
   private database: SQLiteObject;
 
-  constructor(private sqlite: SQLite)
+  constructor(private sqlite: SQLite, private toastCtrl: ToastController)
   {
     if(this.sqlite != undefined)
     {
@@ -33,9 +35,11 @@ export class DatabaseProvider
     {
       let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude) VALUES (\'' + eventName + '\', \'' + eventDate + '\', \'' + eventType + '\', \'' + eventDescription + '\', \'' + eventGeolocationLatitude + '\', \'' + eventGeolocationLongitude + '\');'
 
+      console.log(sqlRequest);
+
       this.database.executeSql(sqlRequest, [])
-      .then(() => console.log('Event inserted'))
-      .catch(error => console.error('ERROR : ' + error));
+            .then(() => this.showToast('Event created'))
+            .catch(error => this.showToast('Error event insertion'));
     }
   }
 
@@ -45,6 +49,7 @@ export class DatabaseProvider
       this.database.executeSql("SELECT * FROM EVENTS;", []).then((data) => {
         for (var i = 0; i < data.rows.length; i++)
         {
+          console.log("event_name : " + data.rows.item(i).event_name);
           items.push(
           {
             title: data.rows.item(i).event_name,
@@ -55,9 +60,25 @@ export class DatabaseProvider
             //latitude: data.rows.item(i).event_longitude
           });
         }
-      console.log(items);
+      console.log("ITEMS : " + JSON.stringify(items));
       }, error => {
         console.error('Error : ' +  error);
       });
+  }
+
+  showToast(message)
+  {
+    let toast = this.toastCtrl.create({
+      message: "Event created",
+      duration: 3000,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() =>
+    {
+      console.log(message);
+    });
+
+    toast.present();
   }
 }

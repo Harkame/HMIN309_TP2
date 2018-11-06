@@ -26,7 +26,6 @@ platforms/android/app/libs
 platforms/android/app/src/main/assets
 platforms/android/app/src/main/java
 platforms/android/app/src/main/libs
-platforms/android/app/src/main/res
 platforms/android/build
 platforms/android/cordova
 platforms/android/CordovaLib
