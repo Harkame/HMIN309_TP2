@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/Harkame/HMIN309_TP2#readme",
   "dependencies": {
-    "@ionic-native/core": "^4.16.0",
-    "@ionic-native/sqlite": "^4.15.0",
-    "ionic": "^4.1.2"
+    "@ionic-native/core": "^4.17.0",
+    "@ionic-native/sqlite": "^4.17.0",
+    "ionic": "^4.3.1"
   }
 }
