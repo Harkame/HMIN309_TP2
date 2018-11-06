@@ -19,7 +19,7 @@ export class DatabaseProvider
         .then((database: SQLiteObject) => {
           this.database = database;
 
-          this.database.executeSql('CREATE TABLE IF NOT EXISTS EVENTS (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude TEXT, event_longitude TEXT);', null)
+          this.database.executeSql('CREATE TABLE IF NOT EXISTS EVENTS (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude TEXT, event_longitude TEXT);', [])
           .then(() => console.log('Table EVENTS created'))
           .catch(error => console.error('ERROR : ' + error));
         })
@@ -33,7 +33,7 @@ export class DatabaseProvider
     {
       let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude) VALUES (\'' + eventName + '\', \'' + eventDate + '\', \'' + eventType + '\', \'' + eventDescription + '\', \'' + eventGeolocationLatitude + '\', \'' + eventGeolocationLongitude + '\');'
 
-      this.database.executeSql(sqlRequest, null)
+      this.database.executeSql(sqlRequest, [])
       .then(() => console.log('Event inserted'))
       .catch(error => console.error('ERROR : ' + error));
     }
