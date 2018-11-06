@@ -15,8 +15,9 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
   pages: Array<{title: string, component: any}>;
+  eventsOfTheDay: any[];
+
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
@@ -28,6 +29,7 @@ export class MyApp {
       { title: 'Creation', component: CreationPage }
     ];
 
+    //ToDo : gérer l'interval, observable sur le getEventsbyDay
   }
 
   initializeApp() {

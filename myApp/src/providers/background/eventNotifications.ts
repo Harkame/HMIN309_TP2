@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { BackgroundMode } from '@ionic-native/background-mode';
 
+import { DatabaseProvider } from '../../providers/database/database'
+
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Shake } from '@ionic-native/shake';
@@ -11,11 +13,11 @@ import { Plugins } from '@capacitor/core';
 const { App, BackgroundTask } = Plugins;
 
 @Injectable()
-export class Background
+export class EventNotification
 {
   private initialized = false;
 
-  constructor(private backgroundMode: BackgroundMode, private shake: Shake, private localNotifications: LocalNotifications)
+  constructor(private databaseProvider: DatabaseProvider, private backgroundMode: BackgroundMode, private shake: Shake, private localNotifications: LocalNotifications)
   {
     if(!this.initialized)
       this.init();
@@ -39,5 +41,10 @@ export class Background
         });
       });
     }
+  }
+
+  getEventsOfTheDay(){
+    //TODO: add methode in database --> getEvents of the day .this.databaseProvider
+    
   }
 }
