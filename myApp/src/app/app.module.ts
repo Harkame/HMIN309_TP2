@@ -23,6 +23,14 @@ import { ToastController } from 'ionic-angular';
 
 import { Camera } from '@ionic-native/camera';
 
+import { BackgroundMode } from '@ionic-native/background-mode';
+
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
+import { Shake } from '@ionic-native/shake';
+
+import { Background } from '../providers/background/background';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -52,7 +60,11 @@ import { Camera } from '@ionic-native/camera';
     Geolocation,
     AndroidPermissions,
     ToastController,
-    Camera
+    Camera,
+    Background,
+    BackgroundMode,
+    LocalNotifications,
+    Shake
   ]
 })
 
