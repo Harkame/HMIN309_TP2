@@ -66,6 +66,28 @@ export class DatabaseProvider
       });
   }
 
+  selectEventsOfToday(items){
+    let date = new Date();
+    let date_of_day = date.getDate + "/" + date.getMonth + "/" + date.getFullYear;
+
+    this.database.executeSql('SELECT * FROM EVENTS WHERE \'' + date_of_day + '\' = event_date', []).then((data) => {
+      for (var i = 0; i < data.rows.length; i++)
+        {
+          console.log("event_name : " + data.rows.item(i).event_name);
+          items.push(
+          {
+            title: data.rows.item(i).event_name,
+            type: data.rows.item(i).event_type,
+            date: data.rows.item(i).event_date,
+            description: data.rows.item(i).event_description
+          });
+        }
+      console.log("ITEMS : " + JSON.stringify(items));
+          }, error => {
+            console.error('Error : ' +  error);
+          });
+  }
+
   showToast(message)
   {
     let toast = this.toastCtrl.create({

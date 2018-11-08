@@ -2,10 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Observable } from 'rxjs/Observable';
 
 import { HomePage } from '../pages/home/home';
 import { EventPage } from '../pages/events/events';
 import { CreationPage } from '../pages/creation/creation';
+import { EventNotification } from '../providers/background/eventNotifications';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class MyApp {
   eventsOfTheDay: any[];
 
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public eventService: EventNotification) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -29,7 +31,7 @@ export class MyApp {
       { title: 'Creation', component: CreationPage }
     ];
 
-    //ToDo : gérer l'interval, observable sur le getEventsbyDay
+    this.getEventOfDay();
   }
 
   initializeApp() {
@@ -45,5 +47,11 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  private getEventOfDay(){
+    this.eventsOfTheDay = Observable.interval(36000000)
+                                    .mergeMapTo(this.eventService.getEventsOfTheDay)
+                                    .map(res => res.json());
   }
 }

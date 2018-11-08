@@ -44,7 +44,8 @@ export class EventNotification
   }
 
   getEventsOfTheDay(){
-    //TODO: add methode in database --> getEvents of the day .this.databaseProvider
-    
+    let items;
+    this.databaseProvider.selectEventsOfToday(items)
+    return items;  
   }
 }
