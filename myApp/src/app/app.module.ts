@@ -29,7 +29,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Shake } from '@ionic-native/shake';
 
-import { Background } from '../providers/background/background';
+import { EventNotification } from '../providers/background/eventNotifications';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { Background } from '../providers/background/background';
     AndroidPermissions,
     ToastController,
     Camera,
-    Background,
+    EventNotification,
     BackgroundMode,
     LocalNotifications,
     Shake
