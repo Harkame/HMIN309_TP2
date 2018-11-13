@@ -8,9 +8,9 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Shake } from '@ionic-native/shake';
 
-import { Plugins } from '@capacitor/core';
+//import { Plugins } from '@capacitor/core';
 
-const { App, BackgroundTask } = Plugins;
+//const { App, BackgroundTask } = Plugins;
 
 @Injectable()
 export class EventNotification
@@ -29,9 +29,10 @@ export class EventNotification
 
     this.backgroundMode.enable();
 
+    /*
     while(true)
     {
-      const watch = this.shake.startWatch(60).subscribe(() =>
+      this.shake.startWatch(60).subscribe(() =>
       {
         this.localNotifications.schedule({
           id: 1,
@@ -41,11 +42,12 @@ export class EventNotification
         });
       });
     }
+    */
   }
 
   getEventsOfTheDay(){
     let items;
     this.databaseProvider.selectEventsOfToday(items)
-    return items;  
+    return items;
   }
 }

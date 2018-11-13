@@ -20,6 +20,8 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@capacitor/cli": "^1.0.0-beta.8",
+    "@capacitor/core": "^1.0.0-beta.8",
     "@ionic-native/android-permissions": "^4.16.0",
     "@ionic-native/background-mode": "^4.17.0",
     "@ionic-native/camera": "^4.17.0",

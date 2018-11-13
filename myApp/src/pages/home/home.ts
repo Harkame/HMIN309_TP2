@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Background } from '../../providers/background/background'
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -18,10 +16,12 @@ export class HomePage {
   checkedType:  String = "Date"; // type of research
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private background: Background) {
+  constructor(public navCtrl: NavController, public navParams: NavParams)
+  {
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
     this.setTypes();
   }
 
@@ -29,31 +29,34 @@ export class HomePage {
     this.event_types = ['Anniversary', 'Work', 'Family', 'Fun'];
   }
 
-  filterTypes(ev: any) {
+  filterTypes(ev: any)
+  {
     this.setTypes();
     let val = ev.target.value;
 
     if (val && val.trim() !== '') {
-      this.event_types = this.event_types.filter(function(item) {
+      this.event_types = this.event_types.filter(function(item)
+      {
         return item.toLowerCase().includes(val.toLowerCase());
       });
     }
   }
 
-  onClickOrSearchTypes(choice: any){
+  onClickOrSearchTypes(choice: any)
+  {
     this.selectedType = choice;
     console.log(this.selectedType);
   }
 
-  onSelectedDate(){
+  onSelectedDate()
+  {
     this.selectedDate = this.dateInput._text;
     console.log(this.selectedDate);
   }
 
-  onChecked(res : any){
+  onChecked(res : any)
+  {
     this.checkedType = res;
     console.log(this.checkedType);
   }
-
-
 }

@@ -29,7 +29,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Shake } from '@ionic-native/shake';
 
-import { EventNotification } from '../providers/background/eventNotifications';
+import { EventNotification } from '../providers/background/EventNotification';
 
 @NgModule({
   declarations: [
