@@ -9,7 +9,9 @@ ionic cordova build android
 ## Run (Include Build)
 
 ### Get target
-<ionic> cordova run android --list
+``` shell
+ionic cordova run android --list
+```
 
 ### Start application
 ``` shell
