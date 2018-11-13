@@ -1,5 +1,10 @@
 # HMIN309_TP2
 
+## Install
+``` shell
+npm install
+```
+
 ## Build
 
 ``` shell
