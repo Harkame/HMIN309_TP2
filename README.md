@@ -2,7 +2,7 @@
 
 ## Build
 
-``` bash
+``` shell
 ionic cordova build android
 ```
 
@@ -15,5 +15,11 @@ ionic cordova build android
 ionic cordova run android --target myTarget
 
 #### Examples
-+ ionic cordova run android --target FPMDU18201001802  
-+ ../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802
++
+``` shell
+ionic cordova run android --target FPMDU18201001802  
+```
++
+``` shell
+../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802 
+```
