@@ -10,9 +10,9 @@ ionic cordova build android
 <ionic> cordova run android --list
 
 ### Start application
-<ionic> cordova run android --target myTarget
+ionic cordova run android --target myTarget
 
 #### Example
 ionic cordova run android --target FPMDU18201001802
-OR  
+OR    
 ../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802 
