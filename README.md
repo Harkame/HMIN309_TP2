@@ -12,6 +12,6 @@ ionic cordova build android
 ### Start application
 ionic cordova run android --target myTarget
 
-#### Example
+#### Examples
 + ionic cordova run android --target FPMDU18201001802  
 + ../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802
