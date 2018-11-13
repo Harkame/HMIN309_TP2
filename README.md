@@ -23,5 +23,5 @@ ionic cordova run android --target myTarget
 ionic cordova run android --target FPMDU18201001802  
 ```
 ``` shell
-../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802 
+./node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802 
 ```
