@@ -2,7 +2,9 @@
 
 ## Build
 
+``` shell
 ionic cordova build android
+```
 
 ## Run (Include Build)
 
