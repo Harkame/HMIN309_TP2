@@ -13,6 +13,5 @@ ionic cordova build android
 ionic cordova run android --target myTarget
 
 #### Example
-ionic cordova run android --target FPMDU18201001802
-OR    
-../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802 
++ ionic cordova run android --target FPMDU18201001802  
++../node_modules/ionic/bin/ionic cordova run android --target FPMDU18201001802
