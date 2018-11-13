@@ -2,7 +2,7 @@
 
 ## Build
 
-``` shell
+``` bash
 ionic cordova build android
 ```
 
