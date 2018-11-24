@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
-
 import { DatabaseProvider } from '../../providers/database/database'
-
 import { Geolocation } from '@ionic-native/geolocation';
-
 import { AndroidPermissions } from '@ionic-native/android-permissions';
-
 import { ToastController } from 'ionic-angular';
-
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -18,11 +15,20 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   templateUrl: 'creation.html',
 })
 export class CreationPage {
-  images: string[];
+  
+  
+    images: string[];
+    notifyTime: any;
+    notification: any;
+    chosenHours: number;
+    chosenMinutes: number;
 
-  constructor(private navCtrl: NavController, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera)
+  constructor(private navCtrl: NavController, private alertCtrl: AlertController , private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera)
   {
     this.images = [];
+    this.notifyTime = moment(new Date()).format();
+    this.chosenHours = new Date().getHours();
+    this.chosenMinutes = new Date().getMinutes();
   }
 
   ionViewDidLoad()
@@ -30,7 +36,12 @@ export class CreationPage {
     console.log('ionViewDidLoad CreationPage');
   }
 
-  create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission)
+  timeChange(time){
+    this.chosenHours = time.hour.value;
+    this.chosenMinutes = time.minute.value;
+  }
+
+  create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission, eventChecked)
   {
     let toastMessage = "";
 
@@ -81,6 +92,12 @@ export class CreationPage {
 
     console.log('eventGeolocationLatitude : ' + eventGeolocationLatitude + ' - eventGeolocationLongitude : ' + eventGeolocationLongitude)
 
+    console.log('eventNotification permission : ' + eventChecked);
+
+    if(eventChecked){
+      this.addNotification(eventDate);
+    }
+
     this.databaseProvider.insertEvent(eventName, eventDate, eventType, eventDescription, eventGeolocationLatitude, eventGeolocationLongitude);
 
     this.navCtrl.setRoot(HomePage);
@@ -103,4 +120,30 @@ export class CreationPage {
     }, (err) => {
     });
   }
-}
+
+  addNotification(eventDate){
+  
+    let firstNotificationTime = eventDate;
+    firstNotificationTime.setHours(this.chosenHours);
+    firstNotificationTime.setMinutes(this.chosenMinutes);
+
+    this.notification = {
+      id: 1,
+      title: 'Rappel !',
+      text: 'Vous avez un evenements aujourd\'hui',
+      at: firstNotificationTime
+    };
+
+    console.log("Notifications to be scheduled: ", this.notification);
+ 
+        this.localNotifications.cancelAll().then(() => {
+ 
+            // Schedule the new notifications
+            this.localNotifications.schedule(this.notification);
+ 
+            this.notification = '';
+ 
+        });
+ 
+    }
+  }

@@ -1,34 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http'
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EventPage } from '../pages/events/events';
 import { CreationPage } from '../pages/creation/creation';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { SQLite} from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
-
 import { Geolocation } from '@ionic-native/geolocation';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
-
 import { ToastController } from 'ionic-angular';
-
 import { Camera } from '@ionic-native/camera';
-
 import { BackgroundMode } from '@ionic-native/background-mode';
-
-import { LocalNotifications } from '@ionic-native/local-notifications';
-
 import { Shake } from '@ionic-native/shake';
-
 import { EventNotification } from '../providers/background/EventNotification';
 
 @NgModule({
@@ -64,7 +53,8 @@ import { EventNotification } from '../providers/background/EventNotification';
     EventNotification,
     BackgroundMode,
     LocalNotifications,
-    Shake
+    Shake,
+    LocalNotifications
   ]
 })
 
