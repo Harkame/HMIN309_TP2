@@ -9,3 +9,5 @@ https://forum.ionicframework.com/t/difference-between-a-regular-service-and-a-pr
 https://forum.ionicframework.com/t/json-as-a-database-how-to-implement/6699
 
 https://www.npmjs.com/package/cordova-androidwear
+
+cordova plugin add cordova-android-support-gradle-release --fetch
