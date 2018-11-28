@@ -14,21 +14,16 @@ import * as moment from 'moment';
   selector: 'page-creation',
   templateUrl: 'creation.html',
 })
-export class CreationPage {
-  
-  
-    images: string[];
-    notifyTime: any;
-    notification: any;
-    chosenHours: number;
-    chosenMinutes: number;
+
+export class CreationPage
+{
+  images: string[];
+  notifyTime: any;
 
   constructor(private navCtrl: NavController, private alertCtrl: AlertController , private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera)
   {
     this.images = [];
     this.notifyTime = moment(new Date()).format();
-    this.chosenHours = new Date().getHours();
-    this.chosenMinutes = new Date().getMinutes();
   }
 
   ionViewDidLoad()
@@ -36,12 +31,7 @@ export class CreationPage {
     console.log('ionViewDidLoad CreationPage');
   }
 
-  timeChange(time){
-    this.chosenHours = time.hour.value;
-    this.chosenMinutes = time.minute.value;
-  }
-
-  create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission, eventChecked)
+  create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission, eventChecked, eventTime)
   {
     let toastMessage = "";
 
@@ -94,9 +84,8 @@ export class CreationPage {
 
     console.log('eventNotification permission : ' + eventChecked);
 
-    if(eventChecked){
-      this.addNotification(eventDate);
-    }
+    if(eventChecked)
+      this.addNotification(eventDate, eventTime, eventName);
 
     this.databaseProvider.insertEvent(eventName, eventDate, eventType, eventDescription, eventGeolocationLatitude, eventGeolocationLongitude);
 
@@ -121,29 +110,19 @@ export class CreationPage {
     });
   }
 
-  addNotification(eventDate){
-  
-    let firstNotificationTime = eventDate;
-    firstNotificationTime.setHours(this.chosenHours);
-    firstNotificationTime.setMinutes(this.chosenMinutes);
+  addNotification(eventDate, eventTime, eventName)
+  {
+    let eventDateTime = new Date(eventDate + " " + eventTime);
 
-    this.notification = {
-      id: 1,
+    console.log("eventDateTime : " + eventDateTime);
+
+    let notification =
+    {
       title: 'Rappel !',
-      text: 'Vous avez un evenements aujourd\'hui',
-      at: firstNotificationTime
+      text: 'Vous avez un evenements aujourd\'hui ' + eventName,
+      at: eventDateTime
     };
 
-    console.log("Notifications to be scheduled: ", this.notification);
- 
-        this.localNotifications.cancelAll().then(() => {
- 
-            // Schedule the new notifications
-            this.localNotifications.schedule(this.notification);
- 
-            this.notification = '';
- 
-        });
- 
-    }
+    this.localNotifications.schedule(notification);
   }
+}

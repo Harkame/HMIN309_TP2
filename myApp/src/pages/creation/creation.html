@@ -18,7 +18,7 @@
 
   <ion-item>
     <ion-label>Date</ion-label>
-    <ion-datetime [(ngModel)]="eventDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="eventDate" displayFormat="DD/MM/YYYY" pickerFormat="D MMMM YYYY"></ion-datetime>
   </ion-item>
 
   <ion-item>
@@ -41,10 +41,10 @@
   <ion-checkbox [(ngModel)]="eventChecked" color="primary"></ion-checkbox>
 </ion-item>
 
- <ion-item>
-  <ion-label>Notify me at: </ion-label>
-  <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="notifyTime" (ionChange)="timeChange($event)"></ion-datetime>
-</ion-item>
+  <ion-item>
+    <ion-label>Notify me at: </ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="eventTime"></ion-datetime>
+  </ion-item>
 
 
   <ion-item (click)="takePicture()">
@@ -55,7 +55,7 @@
   </ion-item>
 
   <ion-item>
-    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission, eventChecked)" ion-button>Créer</button>
+    <button name="button_creation" (click)="create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission, eventChecked, eventTime)" ion-button>Créer</button>
   </ion-item>
 
   <img *ngFor="let image of images" src="data:image/jpeg;base64,{{image}}">
