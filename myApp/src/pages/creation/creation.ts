@@ -120,7 +120,7 @@ export class CreationPage
     {
       title: 'Rappel !',
       text: 'Vous avez un evenements aujourd\'hui ' + eventName,
-      at: eventDateTime
+      trigger: {at: eventDateTime}
     };
 
     this.localNotifications.schedule(notification);
