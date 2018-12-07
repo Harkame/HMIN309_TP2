@@ -10,7 +10,7 @@ import { File, Entry, FileReader } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import {Event} from '../../models/Event'
-
+/*
 import {
   GoogleMaps,
   GoogleMap,
@@ -21,6 +21,7 @@ import {
   Marker,
   Environment
 } from '@ionic-native/google-maps';
+*/
 import * as moment from 'moment';
 
 @IonicPage()
@@ -36,7 +37,7 @@ export class CreationPage
 
   event: Event;
 
-  map: GoogleMap;
+  //map: GoogleMap;
 
   constructor(private navCtrl: NavController, private alertCtrl: AlertController , private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private loadingCtrl: LoadingController)
   {
@@ -156,47 +157,5 @@ export class CreationPage
     };
 
     this.localNotifications.schedule(notification);
-  }
-
-  loadMap()
-  {
-
-    Environment.setEnv({
-      'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyDiadmDr6KFZAbaO4kMdFvqY4rbmYEsINk',
-      'API_KEY_FOR_RER_DEBUG': 'AIzaSyDiadmDr6KFZAbaO4kMdFvqY4rbmYEsINk'
-    });
-
-    let mapOptions: GoogleMapOptions =
-    {
-      camera:
-      {
-         target:
-         {
-           lat: 43.0741904,
-           lng: -89.3809802
-         },
-         zoom: 18,
-         tilt: 30
-       }
-    };
-
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-    let marker: Marker = this.map.addMarkerSync(
-    {
-      title: 'Ionic',
-      icon: 'blue',
-      animation: 'DROP',
-      position:
-      {
-        lat: 43.0741904,
-        lng: -89.3809802
-      }
-    });
-
-    marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() =>
-    {
-      alert('clicked');
-    });
   }
 }
