@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform, LoadingController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { DatabaseProvider } from '../../providers/database/database'
 import { Geolocation } from '@ionic-native/geolocation';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File, Entry, FileReader } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+
+import {Event} from '../../models/Event'
+
 import * as moment from 'moment';
 
 @IonicPage()
@@ -19,8 +23,9 @@ export class CreationPage
 {
   images: string[];
   notifyTime: any;
+  event: Event;
 
-  constructor(private navCtrl: NavController, private alertCtrl: AlertController , private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera)
+  constructor(private navCtrl: NavController, private alertCtrl: AlertController , private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private loadingCtrl: LoadingController)
   {
     this.images = [];
     this.notifyTime = moment(new Date()).format();
@@ -94,6 +99,10 @@ export class CreationPage
 
   takePicture()
   {
+    let loader = this.loadingCtrl.create({
+        content: 'Picture view'
+    });
+
     const options: CameraOptions =
     {
       quality: 100,
@@ -105,8 +114,16 @@ export class CreationPage
 
     this.camera.getPicture(options).then((imageData) =>
     {
-      //let base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
+      loader.present();
+      this.event.fileName = imageData.substring(imageData.lastIndexOf('/')+1);
+      this.event.pathFile =  imageData.substring(0,imageData.lastIndexOf('/')+1);
+
+      this.file.readAsDataURL(this.event.pathFile, this.event.fileName).then(res => this.event.fileURL = res  );
+
+      loader.dismiss();
+    },
+    (error) =>
+    {
     });
   }
 
