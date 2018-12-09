@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { DatabaseProvider } from '../../providers/database/database'
 import { Geolocation } from '@ionic-native/geolocation';
@@ -22,7 +22,6 @@ import {
   Environment
 } from '@ionic-native/google-maps';
 */
-import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -32,38 +31,37 @@ import * as moment from 'moment';
 
 export class CreationPage
 {
-  images: string[];
   notifyTime: any;
 
   event: Event;
 
+  typesList: string[];
+
   //map: GoogleMap;
 
-  constructor(private navCtrl: NavController, private alertCtrl: AlertController , private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private loadingCtrl: LoadingController)
+  constructor(private navCtrl: NavController, private alertCtrl: AlertController, private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File)
   {
-    this.images = [];
-    this.notifyTime = moment(new Date()).format();
-
     //this.loadMap();
+    console.log("creation constructor")
+
+    this.event = new Event();
+    this.typesList = [
+        'Rendez-vous',
+        'Raid',
+        'Sport'
+    ];
   }
 
-  ionViewDidLoad()
-  {
-    console.log('ionViewDidLoad CreationPage');
-  }
-
-  create(eventName, eventDate, eventType, eventDescription, eventGeolocationPermission, eventChecked, eventTime)
+  create(eventGeolocationActived, eventNotificationActived)
   {
     let toastMessage = "";
 
-    if(eventName == undefined)
+    if(this.event.name == undefined)
       toastMessage = "invalid event name";
-    else if(eventDate == undefined)
+    else if(this.event.date == undefined)
       toastMessage = "invalid event date";
-    else if(eventType == undefined)
+    else if(this.event.type == undefined)
       toastMessage = "invalid event type";
-    else if(eventDescription == undefined)
-      eventDescription = '';
 
     if(toastMessage.length > 0)
     {
@@ -82,13 +80,10 @@ export class CreationPage
       return;
     }
 
-
-    console.log('eventGeolocationPermission : ' + eventGeolocationPermission);
-
     let eventGeolocationLatitude = 0;
     let eventGeolocationLongitude = 0;
 
-    if(eventGeolocationPermission)
+    if(eventGeolocationActived)
     {
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
         result => console.log('Has permission?',result.hasPermission),
@@ -96,29 +91,21 @@ export class CreationPage
       );
 
       this.geolocation.getCurrentPosition().then(pos => {
-        eventGeolocationLatitude = pos.coords.latitude;
-        eventGeolocationLongitude = pos.coords.longitude;
+        this.event.geolocationLatitude = pos.coords.latitude;
+        this.event.geolocationLongitude = pos.coords.longitude;
       });
     }
 
-    console.log('eventGeolocationLatitude : ' + eventGeolocationLatitude + ' - eventGeolocationLongitude : ' + eventGeolocationLongitude)
+    if(eventNotificationActived)
+      this.addNotification();
 
-    console.log('eventNotification permission : ' + eventChecked);
-
-    if(eventChecked)
-      this.addNotification(eventDate, eventTime, eventName);
-
-    this.databaseProvider.insertEvent(eventName, eventDate, eventType, eventDescription, eventGeolocationLatitude, eventGeolocationLongitude);
+    this.databaseProvider.insertEvent(this.event);
 
     this.navCtrl.setRoot(HomePage);
   }
 
   takePicture()
   {
-    let loader = this.loadingCtrl.create({
-        content: 'Picture view'
-    });
-
     const options: CameraOptions =
     {
       quality: 100,
@@ -130,29 +117,26 @@ export class CreationPage
 
     this.camera.getPicture(options).then((imageData) =>
     {
-      loader.present();
       this.event.fileName = imageData.substring(imageData.lastIndexOf('/')+1);
       this.event.pathFile =  imageData.substring(0,imageData.lastIndexOf('/')+1);
 
       this.file.readAsDataURL(this.event.pathFile, this.event.fileName).then(res => this.event.fileURL = res  );
-
-      loader.dismiss();
     },
     (error) =>
     {
     });
   }
 
-  addNotification(eventDate, eventTime, eventName)
+  addNotification()
   {
-    let eventDateTime = new Date(eventDate + " " + eventTime);
+    let eventDateTime = new Date(this.event.date + " " + this.event.time);
 
     console.log("eventDateTime : " + eventDateTime);
 
     let notification =
     {
       title: 'Rappel !',
-      text: 'Vous avez un evenements aujourd\'hui ' + eventName,
+      text: 'Vous avez un evenements aujourd\'hui ' + this.event.name,
       trigger: {at: eventDateTime}
     };
 

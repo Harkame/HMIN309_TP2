@@ -3,31 +3,32 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { DatabaseProvider } from '../../providers/database/database'
 
+import { DescriptionPage } from '../description/description';
+
+import {Event} from '../../models/Event'
+
 @Component({
   selector: 'page-event',
   templateUrl: 'events.html'
 })
 export class EventPage
 {
-  selectedItem: any;
-  items: Array<{title: string, type: string, date:string, description: string}>;
+  events: Array<Event>;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
+  constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
   {
-    this.selectedItem = navParams.get('item');
+    this.events = [];
 
-    this.items = [];
-
-    this.databaseProvider.selectAllEvents(this.items);
-
-    console.log('ITEMS : ' + this.items);
+    this.databaseProvider.selectAllEvents(this.events);
   }
 
-  itemTapped(event, item)
+  itemTapped(event)
   {
-    this.navCtrl.push(EventPage,
+    console.log('itemTapped :' + event.id + ' - ' + event.name);
+
+    this.navController.push(DescriptionPage,
     {
-      item: item
+      event: event
     });
   }
 }

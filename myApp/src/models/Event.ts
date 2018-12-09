@@ -1,10 +1,19 @@
 export class Event
 {
+  public id: any;
+  public name: string;
+  public date: string;
+  public time: string;
+  public type: string;
+  public description: string;
+  public notification: boolean;
   public pathFile: string;
   public fileName: string;
   public fileURL: string;
+  public geolocationLatitude: any;
+  public geolocationLongitude: any;
 
-    constructor(public name: string, public type: string, public description: string, public notification: boolean)
+    constructor()
     {
     }
 }

@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { EventPage } from '../pages/events/events';
 import { CreationPage } from '../pages/creation/creation';
+
 import { EventNotification } from '../providers/background/EventNotification';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import * as moment from 'moment';
@@ -68,7 +69,7 @@ export class MyApp {
         text: 'Vous avez ' + eventsOfDay.size() + ' evenements aujourd\'hui',
         at: firstNotificationTime
       };
-   
+
     }else{
       this.notification = {
         id: 1,

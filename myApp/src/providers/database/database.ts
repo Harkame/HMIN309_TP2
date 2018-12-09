@@ -3,6 +3,8 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 import { ToastController } from 'ionic-angular';
 
+import {Event} from '../../models/Event'
+
 const DATABASE_FILE_NAME: string = 'event_database.db';
 
 @Injectable()
@@ -29,11 +31,11 @@ export class DatabaseProvider
     }
   }
 
-  insertEvent(eventName, eventDate, eventType, eventDescription, eventGeolocationLatitude, eventGeolocationLongitude)
+  insertEvent(event : Event)
   {
     if(this.database != undefined)
     {
-      let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude) VALUES (\'' + eventName + '\', \'' + eventDate + '\', \'' + eventType + '\', \'' + eventDescription + '\', \'' + eventGeolocationLatitude + '\', \'' + eventGeolocationLongitude + '\');'
+      let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', \'' + event.geolocationLatitude + '\', \'' + event.geolocationLongitude + '\');'
 
       console.log(sqlRequest);
 
@@ -52,9 +54,10 @@ export class DatabaseProvider
           console.log("event_name : " + data.rows.item(i).event_name);
           items.push(
           {
-            title: data.rows.item(i).event_name,
-            type: data.rows.item(i).event_type,
+            id: data.rows.item(i).event_id,
+            name: data.rows.item(i).event_name,
             date: data.rows.item(i).event_date,
+            type: data.rows.item(i).event_type,
             description: data.rows.item(i).event_description
             //longitude: data.rows.item(i).event_latitude
             //latitude: data.rows.item(i).event_longitude
@@ -64,6 +67,20 @@ export class DatabaseProvider
       }, error => {
         console.error('Error : ' +  error);
       });
+  }
+
+  removeEvent(eventId)
+  {
+    if(this.database != undefined)
+    {
+      let sqlRequest = 'DELETE FROM EVENTS WHERE event_id = ' + eventId + ';';
+
+      console.log(sqlRequest);
+
+      this.database.executeSql(sqlRequest, [])
+            .then(() => this.showToast('Event removed'))
+            .catch(error => this.showToast('Error event remove'));
+    }
   }
 
   selectEventsOfToday(items){

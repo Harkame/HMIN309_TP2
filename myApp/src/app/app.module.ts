@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EventPage } from '../pages/events/events';
 import { CreationPage } from '../pages/creation/creation';
+import { DescriptionPage } from '../pages/description/description';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite} from '@ionic-native/sqlite';
@@ -19,13 +20,15 @@ import { Camera } from '@ionic-native/camera';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Shake } from '@ionic-native/shake';
 import { EventNotification } from '../providers/background/EventNotification';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     EventPage,
-    CreationPage
+    CreationPage,
+    DescriptionPage
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { EventNotification } from '../providers/background/EventNotification';
     HomePage,
     EventPage,
     CreationPage,
+    DescriptionPage
   ],
   providers: [
     StatusBar,
@@ -54,7 +58,8 @@ import { EventNotification } from '../providers/background/EventNotification';
     BackgroundMode,
     LocalNotifications,
     Shake,
-    LocalNotifications
+    LocalNotifications,
+    File
   ]
 })
 

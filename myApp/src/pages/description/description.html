@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ event.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary">Type</ion-label>
+          <ion-select [(ngModel)]="event.type" name="type">
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Description</ion-label>
+          <ion-input [(ngModel)]="event.description" placeholder="Example : 10KM"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="event.fileURL != ''">
+      <ion-col>
+        <img [src]="event.fileURL" style="max-width: 100%">
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row *ngIf="task.location.lat != 0.0 && task.location.lng != 0.0">
+      <ion-col>
+        <p>Lieu du rendez-vous:</p>
+          <agm-map [latitude]="task.location.lat" [longitude]="task.location.lng">
+            <agm-marker [latitude]="task.location.lat" [longitude]="task.location.lng"></agm-marker>
+        </agm-map>
+      </ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col>
+        <button ion-button full color="red" (click)="onRemoveTask()">
+          Remove
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
