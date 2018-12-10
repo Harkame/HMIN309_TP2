@@ -36,12 +36,16 @@
       <ion-checkbox [(ngModel)]="eventGeolocationActived"></ion-checkbox>
     </ion-item>
 
+    <ion-content class="home">
+      <div style="height: 100%;" id="map_canvas"></div>
+    </ion-content>
+
     <ion-item>
-      <ion-label>Want to be notify ?</ion-label>
+      <ion-label>Nofify me ?</ion-label>
       <ion-checkbox [(ngModel)]="eventNotificationActived" color="primary"></ion-checkbox>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="eventNotificationActived">
       <ion-label>Notify me at: </ion-label>
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="eventTime"></ion-datetime>
     </ion-item>
@@ -54,7 +58,7 @@
     </ion-item>
 
     <ion-item *ngIf="event.fileURL != ''">
-        <img [src]="event.fileURL" alt="Aperçu" style="max-width: 100%;">
+        <img [src]="event.fileURL" style="max-width: 100%;">
     </ion-item>
 
     <ion-item>

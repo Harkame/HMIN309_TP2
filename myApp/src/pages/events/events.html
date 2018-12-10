@@ -11,15 +11,12 @@
   <ion-list>
     <button ion-item *ngFor="let event of events" (click)="itemTapped(event)">
       <ion-icon [name]="event.icon"></ion-icon>
-        {{event.name}}
+        {{event.type}}
       <div class="event-date" item-end>
         {{event.date}}
       </div>
       <div class="event-type" item-start>
-        {{event.type}}
-      </div>
-      <div class="event-description">
-        {{event.description}}
+        {{event.name}}
       </div>
     </button>
   </ion-list>

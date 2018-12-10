@@ -23,7 +23,7 @@ export class DatabaseProvider
         .then((database: SQLiteObject) => {
           this.database = database;
 
-          this.database.executeSql('CREATE TABLE IF NOT EXISTS EVENTS (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude TEXT, event_longitude TEXT);', [])
+          this.database.executeSql('CREATE TABLE IF NOT EXISTS Events (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude TEXT, event_longitude TEXT, event_file_url TEXT);', [])
           .then(() => console.log('Table EVENTS created'))
           .catch(error => console.error('ERROR : ' + error));
         })
@@ -35,13 +35,27 @@ export class DatabaseProvider
   {
     if(this.database != undefined)
     {
-      let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', \'' + event.geolocationLatitude + '\', \'' + event.geolocationLongitude + '\');'
+      let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude, event_file_url) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', \'' + event.geolocationLatitude + '\', \'' + event.geolocationLongitude + '\', \'' + event.fileURL +  '\');'
 
       console.log(sqlRequest);
 
       this.database.executeSql(sqlRequest, [])
             .then(() => this.showToast('Event created'))
             .catch(error => this.showToast('Error event insertion'));
+    }
+  }
+
+  updateEvent(event : Event)
+  {
+    if(this.database != undefined)
+    {
+      let sqlRequest = 'UPDATE Events SET event_type = \'' + event.type + '\', event_description = \'' + event.description + '\' WHERE event_id = ' + event.id + ';' ;
+
+      console.log(sqlRequest);
+
+      this.database.executeSql(sqlRequest, [])
+            .then(() => this.showToast('Event modified'))
+            .catch(error => this.showToast('Error event modification'));
     }
   }
 
@@ -58,7 +72,8 @@ export class DatabaseProvider
             name: data.rows.item(i).event_name,
             date: data.rows.item(i).event_date,
             type: data.rows.item(i).event_type,
-            description: data.rows.item(i).event_description
+            description: data.rows.item(i).event_description,
+            fileURL : data.rows.item(i).event_file_url
             //longitude: data.rows.item(i).event_latitude
             //latitude: data.rows.item(i).event_longitude
           });
@@ -79,7 +94,7 @@ export class DatabaseProvider
 
       this.database.executeSql(sqlRequest, [])
             .then(() => this.showToast('Event removed'))
-            .catch(error => this.showToast('Error event remove'));
+            .catch(error => this.showToast('Error event removing'));
     }
   }
 
@@ -108,7 +123,7 @@ export class DatabaseProvider
   showToast(message)
   {
     let toast = this.toastCtrl.create({
-      message: "Event created",
+      message: message,
       duration: 3000,
       position: 'top'
     });

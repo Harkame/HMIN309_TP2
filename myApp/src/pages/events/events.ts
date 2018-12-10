@@ -17,6 +17,10 @@ export class EventPage
 
   constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
   {
+  }
+
+  ionViewDidLoad()
+  {
     this.events = [];
 
     this.databaseProvider.selectAllEvents(this.events);

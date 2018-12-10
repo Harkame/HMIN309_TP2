@@ -13,11 +13,18 @@ import {Event} from '../../models/Event'
 
 export class DescriptionPage
 {
-  private event: Event;
+  private event: Event
+  private typesList: string[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseProvider: DatabaseProvider)
+  constructor(public navController: NavController, public navParams: NavParams, private databaseProvider: DatabaseProvider)
   {
     console.log('contructor descriptionPage');
+
+    this.typesList = [
+        'Rendez-vous',
+        'Raid',
+        'Sport'
+    ];
   }
 
   ngOnInit()
@@ -30,8 +37,17 @@ export class DescriptionPage
     console.log('ionViewDidLoad DescriptionPage');
   }
 
-  onRemoveTask()
+  onUpdateEvent()
+  {
+    this.databaseProvider.updateEvent(this.event);
+
+    this.navController.pop();
+  }
+
+  onRemoveEvent()
   {
     this.databaseProvider.removeEvent(this.event.id);
+
+    this.navController.pop();
   }
 }

@@ -9,19 +9,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File, Entry, FileReader } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
+import {GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker} from '@ionic-native/google-maps';
+
 import {Event} from '../../models/Event'
-/*
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker,
-  Environment
-} from '@ionic-native/google-maps';
-*/
 
 @IonicPage()
 @Component({
@@ -31,17 +21,16 @@ import {
 
 export class CreationPage
 {
-  notifyTime: any;
+  map: GoogleMap;
 
-  event: Event;
+  private notifyTime: any;
 
-  typesList: string[];
+  private event: Event;
 
-  //map: GoogleMap;
+  private typesList: string[];
 
   constructor(private navCtrl: NavController, private alertCtrl: AlertController, private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File)
   {
-    //this.loadMap();
     console.log("creation constructor")
 
     this.event = new Event();
@@ -50,6 +39,38 @@ export class CreationPage
         'Raid',
         'Sport'
     ];
+    platform.ready().then(() =>
+    {
+      this.loadGoogleMap();
+    });
+  }
+
+  loadGoogleMap(){
+    let mapOptions: GoogleMapOptions = {
+  camera: {
+     target: {
+       lat: 43.0741904,
+       lng: -89.3809802
+     },
+     zoom: 18,
+     tilt: 30
+   }
+};
+
+this.map = GoogleMaps.create('map_canvas', mapOptions);
+
+let marker: Marker = this.map.addMarkerSync({
+  title: 'Ionic',
+  icon: 'blue',
+  animation: 'DROP',
+  position: {
+    lat: 43.0741904,
+    lng: -89.3809802
+  }
+});
+marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+  alert('clicked');
+});
   }
 
   create(eventGeolocationActived, eventNotificationActived)
@@ -117,8 +138,8 @@ export class CreationPage
 
     this.camera.getPicture(options).then((imageData) =>
     {
-      this.event.fileName = imageData.substring(imageData.lastIndexOf('/')+1);
-      this.event.pathFile =  imageData.substring(0,imageData.lastIndexOf('/')+1);
+      this.event.fileName = imageData.substring(imageData.lastIndexOf('/') + 1);
+      this.event.pathFile =  imageData.substring(0, imageData.lastIndexOf('/') + 1);
 
       this.file.readAsDataURL(this.event.pathFile, this.event.fileName).then(res => this.event.fileURL = res  );
     },
