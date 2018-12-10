@@ -11,7 +11,7 @@
         <ion-item>
           <ion-label color="primary">Type</ion-label>
           <ion-select [(ngModel)]="event.type" name="type">
-              <ion-option *ngFor="let type of typesList" [value]="type">{{ type }}</ion-option>
+              <ion-option *ngFor="let eventType of eventsTypes" [value]="eventType">{{ eventType }}</ion-option>
           </ion-select>
         </ion-item>
 

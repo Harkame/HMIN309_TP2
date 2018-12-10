@@ -13,15 +13,16 @@ import { MapPage } from '../pages/map/map';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite} from '@ionic-native/sqlite';
-import { DatabaseProvider } from '../providers/database/database';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ToastController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Shake } from '@ionic-native/shake';
-import { EventNotification } from '../providers/background/EventNotification';
 import { File } from '@ionic-native/file';
+
+import { DatabaseProvider } from '../providers/database/database';
+import { EventsTypesProvider } from '../providers/events_types/events-types';
 
 @NgModule({
   declarations: [
@@ -57,12 +58,12 @@ import { File } from '@ionic-native/file';
     AndroidPermissions,
     ToastController,
     Camera,
-    EventNotification,
     BackgroundMode,
     LocalNotifications,
     Shake,
     LocalNotifications,
-    File
+    File,
+    EventsTypesProvider
   ]
 })
 

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Event} from '../../models/Event'
 
+import { EventsTypesProvider } from '../../providers/events_types/events-types';
 import { DatabaseProvider } from '../../providers/database/database'
 
-import {Event} from '../../models/Event'
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,27 +15,16 @@ import {Event} from '../../models/Event'
 export class DescriptionPage
 {
   private event: Event
-  private typesList: string[];
+  private eventsTypes: string[];
 
-  constructor(public navController: NavController, public navParams: NavParams, private databaseProvider: DatabaseProvider)
+  constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
   {
-    console.log('contructor descriptionPage');
-
-    this.typesList = [
-        'Rendez-vous',
-        'Raid',
-        'Sport'
-    ];
+    this.eventsTypes = EventsTypesProvider.getTypes();
   }
 
   ngOnInit()
   {
     this.event = this.navParams.get('event');
-  }
-
-  ionViewDidLoad()
-  {
-    console.log('ionViewDidLoad DescriptionPage');
   }
 
   onUpdateEvent()

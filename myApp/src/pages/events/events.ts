@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { DatabaseProvider } from '../../providers/database/database'
 
@@ -15,7 +15,7 @@ export class EventPage
 {
   events: Array<Event>;
 
-  constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
+  constructor(private navController: NavController, private databaseProvider: DatabaseProvider)
   {
   }
 

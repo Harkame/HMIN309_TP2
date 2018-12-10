@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform, NavParams } from 'ionic-angular';
+import {Event} from '../../models/Event'
 
-import {GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker} from '@ionic-native/google-maps';
+import { DatabaseProvider } from '../../providers/database/database'
+
+import { Component } from '@angular/core';
+import { IonicPage, NavController, Platform, NavParams } from 'ionic-angular';
+
+import {GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, Marker} from '@ionic-native/google-maps';
 
 @IonicPage()
 @Component({
@@ -10,9 +14,11 @@ import {GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition
 })
 export class MapPage
 {
-  map: GoogleMap;
+  private event : Event;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform)
+  private map : GoogleMap;
+
+  constructor(private navCtrl: NavController, private navParams: NavParams, private platform: Platform, private databaseProvider : DatabaseProvider)
   {
     this.platform.ready().then(() =>
     {
@@ -20,8 +26,9 @@ export class MapPage
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MapPage');
+  ngOnInit()
+  {
+    this.event = this.navParams.get('event');
   }
 
   loadGoogleMap()
@@ -32,8 +39,8 @@ export class MapPage
       {
         target:
         {
-          lat: 43.0741904,
-          lng: -89.3809802
+          lat: this.event.geolocationLatitude,
+          lng: this.event.geolocationLongitude
         },
         zoom: 18,
         tilt: 30
@@ -49,8 +56,8 @@ export class MapPage
       animation: 'DROP',
       position:
       {
-        lat: 43.0741904,
-        lng: -89.3809802
+        lat: this.event.geolocationLatitude,
+        lng: this.event.geolocationLongitude
       }
     });
 

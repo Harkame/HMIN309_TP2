@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
+import {Event} from '../../models/Event'
+
 import { HomePage } from '../home/home';
+import { MapPage } from '../map/map';
+
 import { DatabaseProvider } from '../../providers/database/database'
-import { Geolocation } from '@ionic-native/geolocation';
+import { EventsTypesProvider } from '../../providers/events_types/events-types';
+
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { File, Entry, FileReader } from '@ionic-native/file';
+import { File } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-
-import { MapPage } from '../map/map';
-
-import {Event} from '../../models/Event'
+import { Geolocation } from '@ionic-native/geolocation';
 
 @IonicPage()
 @Component({
@@ -21,22 +23,19 @@ import {Event} from '../../models/Event'
 
 export class CreationPage
 {
-  private notifyTime: any;
+  //private notifyTime: any;
 
   private event: Event;
 
-  private typesList: string[];
+  private eventsTypes: string[];
 
-  constructor(private navController: NavController, private alertCtrl: AlertController, private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File)
+  constructor(private navController: NavController, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private geolocation : Geolocation)
   {
     console.log("creation constructor")
 
     this.event = new Event();
-    this.typesList = [
-        'Rendez-vous',
-        'Raid',
-        'Sport'
-    ];
+
+    this.eventsTypes = EventsTypesProvider.getTypes();
   }
 
   create(eventGeolocationActived, eventNotificationActived)
@@ -67,21 +66,16 @@ export class CreationPage
       return;
     }
 
-    let eventGeolocationLatitude = 0;
-    let eventGeolocationLongitude = 0;
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
+      result => console.log('Has permission?',result.hasPermission),
+      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
+    );
 
-    if(eventGeolocationActived)
+    this.geolocation.getCurrentPosition().then(pos =>
     {
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
-        result => console.log('Has permission?',result.hasPermission),
-        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
-      );
-
-      this.geolocation.getCurrentPosition().then(pos => {
-        this.event.geolocationLatitude = pos.coords.latitude;
-        this.event.geolocationLongitude = pos.coords.longitude;
-      });
-    }
+      this.event.geolocationLatitude = pos.coords.latitude;
+      this.event.geolocationLongitude = pos.coords.longitude;
+    });
 
     if(eventNotificationActived)
       this.addNotification();

@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -16,7 +15,7 @@ export class HomePage {
   checkedType:  String = "Date"; // type of research
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams)
+  constructor()
   {
   }
 
