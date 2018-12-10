@@ -32,8 +32,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Geolocation</ion-label>
-      <ion-checkbox [(ngModel)]="eventGeolocationActived"></ion-checkbox>
+      <button name="button_geolocation" (click)="getGeolocation()" ion-button>Geolocation</button>
     </ion-item>
 
     <ion-content class="home">

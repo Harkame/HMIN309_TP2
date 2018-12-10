@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { EventPage } from '../pages/events/events';
 import { CreationPage } from '../pages/creation/creation';
 import { DescriptionPage } from '../pages/description/description';
+import { MapPage } from '../pages/map/map';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite} from '@ionic-native/sqlite';
@@ -28,7 +29,8 @@ import { File } from '@ionic-native/file';
     HomePage,
     EventPage,
     CreationPage,
-    DescriptionPage
+    DescriptionPage,
+    MapPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { File } from '@ionic-native/file';
     HomePage,
     EventPage,
     CreationPage,
-    DescriptionPage
+    DescriptionPage,
+    MapPage
   ],
   providers: [
     StatusBar,

@@ -9,7 +9,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File, Entry, FileReader } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
-import {GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker} from '@ionic-native/google-maps';
+import { MapPage } from '../map/map';
 
 import {Event} from '../../models/Event'
 
@@ -21,15 +21,13 @@ import {Event} from '../../models/Event'
 
 export class CreationPage
 {
-  map: GoogleMap;
-
   private notifyTime: any;
 
   private event: Event;
 
   private typesList: string[];
 
-  constructor(private navCtrl: NavController, private alertCtrl: AlertController, private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File)
+  constructor(private navController: NavController, private alertCtrl: AlertController, private platform: Platform, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private geolocation: Geolocation, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File)
   {
     console.log("creation constructor")
 
@@ -39,38 +37,6 @@ export class CreationPage
         'Raid',
         'Sport'
     ];
-    platform.ready().then(() =>
-    {
-      this.loadGoogleMap();
-    });
-  }
-
-  loadGoogleMap(){
-    let mapOptions: GoogleMapOptions = {
-  camera: {
-     target: {
-       lat: 43.0741904,
-       lng: -89.3809802
-     },
-     zoom: 18,
-     tilt: 30
-   }
-};
-
-this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-let marker: Marker = this.map.addMarkerSync({
-  title: 'Ionic',
-  icon: 'blue',
-  animation: 'DROP',
-  position: {
-    lat: 43.0741904,
-    lng: -89.3809802
-  }
-});
-marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-  alert('clicked');
-});
   }
 
   create(eventGeolocationActived, eventNotificationActived)
@@ -122,7 +88,7 @@ marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
 
     this.databaseProvider.insertEvent(this.event);
 
-    this.navCtrl.setRoot(HomePage);
+    this.navController.setRoot(HomePage);
   }
 
   takePicture()
@@ -162,5 +128,13 @@ marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
     };
 
     this.localNotifications.schedule(notification);
+  }
+
+  getGeolocation()
+  {
+    this.navController.push(MapPage,
+    {
+      event: event
+    });
   }
 }
