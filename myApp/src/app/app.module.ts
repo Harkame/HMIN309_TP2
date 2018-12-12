@@ -20,9 +20,11 @@ import { Camera } from '@ionic-native/camera';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Shake } from '@ionic-native/shake';
 import { File } from '@ionic-native/file';
-
+import { EventSearchedPage} from '../pages/event-searched/event-searched'
 import { DatabaseProvider } from '../providers/database/database';
 import { EventsTypesProvider } from '../providers/events_types/events-types';
+import { EventsSearchedProviders } from '../providers/events_searched/events_searched';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { EventsTypesProvider } from '../providers/events_types/events-types';
     EventPage,
     CreationPage,
     DescriptionPage,
-    MapPage
+    MapPage,
+    EventSearchedPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { EventsTypesProvider } from '../providers/events_types/events-types';
     EventPage,
     CreationPage,
     DescriptionPage,
-    MapPage
+    MapPage,
+    EventSearchedPage
   ],
   providers: [
     StatusBar,
@@ -63,7 +67,8 @@ import { EventsTypesProvider } from '../providers/events_types/events-types';
     Shake,
     LocalNotifications,
     File,
-    EventsTypesProvider
+    EventsTypesProvider,
+    EventsSearchedProviders
   ]
 })
 

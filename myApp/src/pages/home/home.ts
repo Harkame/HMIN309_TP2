@@ -1,4 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { EventSearchedPage } from '../event-searched/event-searched';
+import { EventsTypesProvider } from '../../providers/events_types/events-types';
 
 @Component({
   selector: 'page-home',
@@ -7,15 +10,16 @@ import { Component, ViewChild } from '@angular/core';
 
 export class HomePage {
   @ViewChild('dateInput') dateInput;
+  @ViewChild('typeInput') typeInput;
   event_types: Array<string>;
   events: Array<any>;
-  length: any = 1;
+  length: any = 0;
   selectedType: String = "None"; // selected type for the research by type
   selectedDate: String = "None";
   checkedType:  String = "Date"; // type of research
 
 
-  constructor()
+  constructor(public navCtrl: NavController)
   {
   }
 
@@ -25,7 +29,7 @@ export class HomePage {
   }
 
   setTypes(): void {
-    this.event_types = ['Anniversary', 'Work', 'Family', 'Fun'];
+    this.event_types = EventsTypesProvider.getTypes();
   }
 
   filterTypes(ev: any)
@@ -39,6 +43,23 @@ export class HomePage {
         return item.toLowerCase().includes(val.toLowerCase());
       });
     }
+  }
+
+  
+  submitSearch(){
+
+    if(this.typeInput != undefined){
+      this.selectedType = this.typeInput._value;
+    }
+  
+    if(this.checkedType == "Type"){
+      console.log(this.selectedType);
+      this.navCtrl.push(EventSearchedPage, {searchedType : 'Type', type : this.selectedType});
+    }
+    else {
+      console.log(this.selectedDate);
+      this.navCtrl.push(EventSearchedPage, {searchedType : 'Date', type : this.selectedDate});
+    }   
   }
 
   onClickOrSearchTypes(choice: any)

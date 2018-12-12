@@ -59,6 +59,53 @@ export class DatabaseProvider
     }
   }
 
+  selectEventsByType(events, type)
+  {
+    if(this.sqlite != undefined)
+      this.database.executeSql("SELECT * FROM EVENTS WHERE event_type = " + type + ";", []).then((data) => {
+        for (var i = 0; i < data.rows.length; i++)
+        {
+          console.log("event_name : " + data.rows.item(i).event_name);
+          events.push(
+          {
+            id: data.rows.item(i).event_id,
+            name: data.rows.item(i).event_name,
+            date: data.rows.item(i).event_date,
+            type: data.rows.item(i).event_type,
+            description: data.rows.item(i).event_description,
+            fileURL : data.rows.item(i).event_file_url
+          });
+        }
+      console.log("ITEMS : " + JSON.stringify(events));
+      }, error => {
+        console.error('Error : ' +  error);
+      });
+  }
+
+  selectEventsByDate(events, date)
+  {
+    if(this.sqlite != undefined)
+      this.database.executeSql("SELECT * FROM EVENTS WHERE event_date = " + date + ";", []).then((data) => {
+        for (var i = 0; i < data.rows.length; i++)
+        {
+          console.log("event_name : " + data.rows.item(i).event_name);
+          events.push(
+          {
+            id: data.rows.item(i).event_id,
+            name: data.rows.item(i).event_name,
+            date: data.rows.item(i).event_date,
+            type: data.rows.item(i).event_type,
+            description: data.rows.item(i).event_description,
+            fileURL : data.rows.item(i).event_file_url
+          });
+        }
+      console.log("ITEMS : " + JSON.stringify(events));
+      }, error => {
+        console.error('Error : ' +  error);
+      });
+  }
+
+
   selectAllEvents(items)
   {
     if(this.sqlite != undefined)

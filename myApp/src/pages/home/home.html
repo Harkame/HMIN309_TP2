@@ -26,7 +26,7 @@
   <div *ngIf="checkedType == 'Type' ">
     <h3> Search by Type </h3>
     <p padding-left padding-right>Select the type of events that you want to display </p>
-    <ion-searchbar placeholder="Search" showCancelButton color="danger" (ionInput)="filterTypes($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Search" showCancelButton color="danger" (ionInput)="filterTypes($event)" #typeInput></ion-searchbar>
 
     <ion-list>
       <ion-item *ngFor="let type of event_types" (click)="onClickOrSearchTypes(item)">
@@ -48,25 +48,9 @@
 
   </div>
 
-
-  <div *ngIf="lenght != 0">
-      <ion-list>
-          <button ion-item *ngFor="let event of events" (click)="itemTapped($event, item)">
-            <ion-icon [name]="item.title" item-start></ion-icon>
-            {{item.title}}
-            <div class="item-type" item-start>
-              {{item.type}}
-            </div>
-            <div class="item-description">
-              {{item.description}}
-            </div>
-            <div class="item-date" item-end>
-              {{item.date}}
-            </div>
-          </button>
-        </ion-list>
+  <div>
+    <button class="searchButton" ion-button round (click)="submitSearch()"> Search </button>
   </div>
-
 
 </ion-content>
 
