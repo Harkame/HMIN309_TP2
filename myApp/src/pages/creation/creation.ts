@@ -1,4 +1,4 @@
-import {Event} from '../../models/Event'
+import { Event } from '../../models/Event'
 
 import { HomePage } from '../home/home';
 import { MapPage } from '../map/map';
@@ -7,7 +7,7 @@ import { DatabaseProvider } from '../../providers/database/database'
 import { EventsTypesProvider } from '../../providers/events_types/events-types';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -23,19 +23,26 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 export class CreationPage
 {
-  //private notifyTime: any;
+  private event : Event;
 
-  private event: Event;
+  private eventsTypes : string[];
 
-  private eventsTypes: string[];
-
-  constructor(private navController: NavController, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private geolocation : Geolocation)
+  constructor(private navController: NavController, private navParams : NavParams, private events: Events, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private geolocation : Geolocation)
   {
-    console.log("creation constructor")
-
     this.event = new Event();
 
     this.eventsTypes = EventsTypesProvider.getTypes();
+
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
+      result => console.log('Has permission?',result.hasPermission),
+      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
+    );
+
+    this.geolocation.getCurrentPosition().then(pos =>
+    {
+      this.event.latitude = pos.coords.latitude;
+      this.event.longitude = pos.coords.longitude;
+    });
   }
 
   create(eventGeolocationActived, eventNotificationActived)
@@ -65,17 +72,6 @@ export class CreationPage
 
       return;
     }
-
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
-      result => console.log('Has permission?',result.hasPermission),
-      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
-    );
-
-    this.geolocation.getCurrentPosition().then(pos =>
-    {
-      this.event.geolocationLatitude = pos.coords.latitude;
-      this.event.geolocationLongitude = pos.coords.longitude;
-    });
 
     if(eventNotificationActived)
       this.addNotification();
@@ -126,9 +122,16 @@ export class CreationPage
 
   getGeolocation()
   {
+    this.events.subscribe('eventGeolocation', (paramsVar) =>
+    {
+      this.event = paramsVar;
+
+      this.events.unsubscribe('eventGeolocation');
+    })
+
     this.navController.push(MapPage,
     {
-      event: event
+      event : this.event
     });
   }
 }

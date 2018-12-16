@@ -7,13 +7,11 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
+  <div *ngIf = "test == true">
+    <p> Y'a un problème </p>
+  </div>
 
-    <div *ngIf = "test == true">
-      <p> Y'a un problème </p>
-    </div>
-     
   <ion-list>
     <button ion-item *ngFor="let event of events" (click)="itemTapped(event)">
       <ion-icon [name]="event.icon"></ion-icon>

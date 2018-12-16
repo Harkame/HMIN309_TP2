@@ -1,4 +1,4 @@
-import {Event} from '../../models/Event'
+import { Event } from '../../models/Event'
 
 import { EventsTypesProvider } from '../../providers/events_types/events-types';
 import { DatabaseProvider } from '../../providers/database/database'
@@ -14,8 +14,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 export class DescriptionPage
 {
-  private event: Event
-  private eventsTypes: string[];
+  private event : Event
+  private eventsTypes : string[];
 
   constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
   {
@@ -25,6 +25,8 @@ export class DescriptionPage
   ngOnInit()
   {
     this.event = this.navParams.get('event');
+
+    console.log("description event : " + JSON.stringify(this.event));
   }
 
   onUpdateEvent()

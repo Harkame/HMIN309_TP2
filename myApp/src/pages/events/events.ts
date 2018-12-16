@@ -5,7 +5,7 @@ import { DatabaseProvider } from '../../providers/database/database'
 
 import { DescriptionPage } from '../description/description';
 
-import {Event} from '../../models/Event'
+import { Event } from '../../models/Event'
 
 @Component({
   selector: 'page-event',
@@ -28,11 +28,9 @@ export class EventPage
 
   itemTapped(event)
   {
-    console.log('itemTapped :' + event.id + ' - ' + event.name);
-
     this.navController.push(DescriptionPage,
     {
-      event: event
+      event : event
     });
   }
 }

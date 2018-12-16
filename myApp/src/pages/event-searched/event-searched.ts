@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database'
 import { EventsSearchedProviders } from '../../providers/events_searched/events_searched';
 import { DescriptionPage } from '../description/description';
-import {Event} from '../../models/Event'
+import { Event } from '../../models/Event'
 
 /**
  * Generated class for the EventSearchedPage page.
@@ -24,7 +24,7 @@ export class EventSearchedPage {
 
   constructor(private eventProvider:EventsSearchedProviders ,private navParams: NavParams, private navController: NavController, private databaseProvider: DatabaseProvider)
   {
-    
+
   }
 
   ngOnInit(){
@@ -37,10 +37,10 @@ export class EventSearchedPage {
 
     this.eventProvider.setEventsByType(this.searchedType, this.data);
     this.events = this.eventProvider.getEvents()
-  
+
     console.log("set Events by Types");
     console.log("events : " + this.events);
-    
+
     if(this.events == undefined || this.events.length == 0){
       this.test = true;
     }
@@ -56,7 +56,7 @@ export class EventSearchedPage {
 
     this.navController.push(DescriptionPage,
     {
-      event: event
+      event : event
     });
   }
 }

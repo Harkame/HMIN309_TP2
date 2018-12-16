@@ -10,10 +10,14 @@ export class Event
   public pathFile: string = '';
   public fileName: string = '';
   public fileURL: string = '';
-  public geolocationLatitude: any;
-  public geolocationLongitude: any;
+
+  public address : string = '';
+  public latitude: any;
+  public longitude: any;
 
     constructor()
     {
+      this.latitude = 48.856614;
+      this.longitude = 2.3522219;
     }
 }

@@ -18,7 +18,6 @@ export class HomePage {
   selectedDate: String = "None";
   checkedType:  String = "Date"; // type of research
 
-
   constructor(public navCtrl: NavController)
   {
   }
@@ -45,13 +44,13 @@ export class HomePage {
     }
   }
 
-  
+
   submitSearch(){
 
     if(this.typeInput != undefined){
       this.selectedType = this.typeInput._value;
     }
-  
+
     if(this.checkedType == "Type"){
       console.log(this.selectedType);
       this.navCtrl.push(EventSearchedPage, {searchedType : 'Type', type : this.selectedType});
@@ -59,7 +58,7 @@ export class HomePage {
     else {
       console.log(this.selectedDate);
       this.navCtrl.push(EventSearchedPage, {searchedType : 'Date', type : this.selectedDate});
-    }   
+    }
   }
 
   onClickOrSearchTypes(choice: any)

@@ -23,9 +23,8 @@ export class DatabaseProvider
         .then((database: SQLiteObject) => {
           this.database = database;
 
-          this.database.executeSql('CREATE TABLE IF NOT EXISTS Events (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude TEXT, event_longitude TEXT, event_file_url TEXT);', [])
-          .then(() => console.log('Table EVENTS created'))
-          .catch(error => console.error('ERROR : ' + error));
+          this.database.executeSql('CREATE TABLE IF NOT EXISTS Events (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude REAL, event_longitude REAL, event_address TEXT, event_file_url TEXT);', [])
+          .then(() => console.log('Table Events created'))
         })
         .catch(error => console.error('ERROR : ' + error));
     }
@@ -35,7 +34,7 @@ export class DatabaseProvider
   {
     if(this.database != undefined)
     {
-      let sqlRequest = 'INSERT INTO EVENTS (event_name, event_date, event_type, event_description, event_latitude, event_longitude, event_file_url) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', \'' + event.geolocationLatitude + '\', \'' + event.geolocationLongitude + '\', \'' + event.fileURL +  '\');'
+      let sqlRequest = 'INSERT INTO Events (event_name, event_date, event_type, event_description, event_latitude, event_longitude, event_address, event_file_url) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', \'' + event.latitude + '\', \'' + event.longitude + '\', \'' + event.address+ '\', \'' + event.fileURL +  '\');';
 
       console.log(sqlRequest);
 
@@ -49,7 +48,7 @@ export class DatabaseProvider
   {
     if(this.database != undefined)
     {
-      let sqlRequest = 'UPDATE Events SET event_type = \'' + event.type + '\', event_description = \'' + event.description + '\' WHERE event_id = ' + event.id + ';' ;
+      let sqlRequest = 'UPDATE Events SET event_type = \'' + event.type + '\', event_description = \'' + event.description + '\', event_latitude = \'' + event.latitude+ '\', event_longitude = \'' + event.longitude+ '\', event_address = \'' + event.address + '\' WHERE event_id = ' + event.id + ';' ;
 
       console.log(sqlRequest);
 
@@ -62,17 +61,20 @@ export class DatabaseProvider
   selectEventsByType(events, type)
   {
     if(this.sqlite != undefined)
-      this.database.executeSql("SELECT * FROM EVENTS WHERE event_type = " + type + ";", []).then((data) => {
+      this.database.executeSql("SELECT * FROM Events WHERE event_type = " + type + ";", []).then((data) => {
         for (var i = 0; i < data.rows.length; i++)
         {
           console.log("event_name : " + data.rows.item(i).event_name);
           events.push(
           {
-            id: data.rows.item(i).event_id,
-            name: data.rows.item(i).event_name,
-            date: data.rows.item(i).event_date,
-            type: data.rows.item(i).event_type,
-            description: data.rows.item(i).event_description,
+            id : data.rows.item(i).event_id,
+            name : data.rows.item(i).event_name,
+            date : data.rows.item(i).event_date,
+            type : data.rows.item(i).event_type,
+            description : data.rows.item(i).event_description,
+            latitude : data.rows.item(i).event_latitude,
+            longitude : data.rows.item(i).event_longitude,
+            address : data.rows.item(i).event_address,
             fileURL : data.rows.item(i).event_file_url
           });
         }
@@ -85,17 +87,20 @@ export class DatabaseProvider
   selectEventsByDate(events, date)
   {
     if(this.sqlite != undefined)
-      this.database.executeSql("SELECT * FROM EVENTS WHERE event_date = " + date + ";", []).then((data) => {
+      this.database.executeSql("SELECT * FROM Events WHERE event_date = " + date + ";", []).then((data) => {
         for (var i = 0; i < data.rows.length; i++)
         {
           console.log("event_name : " + data.rows.item(i).event_name);
           events.push(
           {
-            id: data.rows.item(i).event_id,
-            name: data.rows.item(i).event_name,
-            date: data.rows.item(i).event_date,
-            type: data.rows.item(i).event_type,
-            description: data.rows.item(i).event_description,
+            id : data.rows.item(i).event_id,
+            name : data.rows.item(i).event_name,
+            date : data.rows.item(i).event_date,
+            type : data.rows.item(i).event_type,
+            description : data.rows.item(i).event_description,
+            latitude : data.rows.item(i).event_latitude,
+            longitude : data.rows.item(i).event_longitude,
+            address : data.rows.item(i).event_address,
             fileURL : data.rows.item(i).event_file_url
           });
         }
@@ -109,20 +114,21 @@ export class DatabaseProvider
   selectAllEvents(items)
   {
     if(this.sqlite != undefined)
-      this.database.executeSql("SELECT * FROM EVENTS;", []).then((data) => {
+      this.database.executeSql("SELECT * FROM Events;", []).then((data) => {
         for (var i = 0; i < data.rows.length; i++)
         {
           console.log("event_name : " + data.rows.item(i).event_name);
           items.push(
           {
-            id: data.rows.item(i).event_id,
-            name: data.rows.item(i).event_name,
-            date: data.rows.item(i).event_date,
-            type: data.rows.item(i).event_type,
-            description: data.rows.item(i).event_description,
+            id : data.rows.item(i).event_id,
+            name : data.rows.item(i).event_name,
+            date : data.rows.item(i).event_date,
+            type : data.rows.item(i).event_type,
+            description : data.rows.item(i).event_description,
+            latitude : data.rows.item(i).event_latitude,
+            longitude : data.rows.item(i).event_longitude,
+            address : data.rows.item(i).event_address,
             fileURL : data.rows.item(i).event_file_url
-            //longitude: data.rows.item(i).event_latitude
-            //latitude: data.rows.item(i).event_longitude
           });
         }
       console.log("ITEMS : " + JSON.stringify(items));
@@ -135,7 +141,7 @@ export class DatabaseProvider
   {
     if(this.database != undefined)
     {
-      let sqlRequest = 'DELETE FROM EVENTS WHERE event_id = ' + eventId + ';';
+      let sqlRequest = 'DELETE FROM Events WHERE event_id = ' + eventId + ';';
 
       console.log(sqlRequest);
 
@@ -149,16 +155,21 @@ export class DatabaseProvider
     let date = new Date();
     let date_of_day = date.getDate + "/" + date.getMonth + "/" + date.getFullYear;
 
-    this.database.executeSql('SELECT * FROM EVENTS WHERE \'' + date_of_day + '\' = event_date', []).then((data) => {
+    this.database.executeSql('SELECT * FROM Events WHERE \'' + date_of_day + '\' = event_date', []).then((data) => {
       for (var i = 0; i < data.rows.length; i++)
         {
           console.log("event_name : " + data.rows.item(i).event_name);
           items.push(
           {
-            title: data.rows.item(i).event_name,
-            type: data.rows.item(i).event_type,
-            date: data.rows.item(i).event_date,
-            description: data.rows.item(i).event_description
+            id : data.rows.item(i).event_id,
+            name : data.rows.item(i).event_name,
+            date : data.rows.item(i).event_date,
+            type : data.rows.item(i).event_type,
+            description : data.rows.item(i).event_description,
+            latitude : data.rows.item(i).event_latitude,
+            longitude : data.rows.item(i).event_longitude,
+            address : data.rows.item(i).event_address,
+            fileURL : data.rows.item(i).event_file_url
           });
         }
       console.log("ITEMS : " + JSON.stringify(items));

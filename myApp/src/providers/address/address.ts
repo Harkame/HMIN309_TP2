@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
@@ -9,7 +9,6 @@ export class AddressProvider
     private apiURL: string = 'https://maps.googleapis.com/maps/api/geocode/json?';
     private apiKey: string = 'AIzaSyBQ9s-I2YGlocgEKe0fVUid6mUqacCaqbE';
     //private apiKey : string = 'AIzaSyDiadmDr6KFZAbaO4kMdFvqY4rbmYEsINk ';
-    private options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
     constructor(private http: HttpClient)
     {
