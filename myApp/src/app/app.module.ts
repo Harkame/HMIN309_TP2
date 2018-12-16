@@ -24,7 +24,8 @@ import { EventSearchedPage} from '../pages/event-searched/event-searched'
 import { DatabaseProvider } from '../providers/database/database';
 import { EventsTypesProvider } from '../providers/events_types/events-types';
 import { EventsSearchedProviders } from '../providers/events_searched/events_searched';
-
+import { AddressProvider } from '../providers/address/address';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { EventsSearchedProviders } from '../providers/events_searched/events_sea
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyBQ9s-I2YGlocgEKe0fVUid6mUqacCaqbE'}),
     HttpModule,
     HttpClientModule
   ],
@@ -68,7 +70,8 @@ import { EventsSearchedProviders } from '../providers/events_searched/events_sea
     LocalNotifications,
     File,
     EventsTypesProvider,
-    EventsSearchedProviders
+    EventsSearchedProviders,
+    AddressProvider
   ]
 })
 
