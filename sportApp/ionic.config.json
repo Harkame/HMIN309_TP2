@@ -1,0 +1,7 @@
+{
+  "name": "sportApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
