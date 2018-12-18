@@ -16,4 +16,4 @@ cordova plugin add https://github.com/mapsplugin/cordova-plugin-googlemaps#multi
 
 npm install rxjs@6 rxjs-compat@6 --save
 
-https://forum.ionicframework.com/t/local-notifications-with-multiple-actions-buttons/33430/4
+https://forum.ionicframework.com/t/local-notifications-with-multiple-actions-buttons/33430/4é
