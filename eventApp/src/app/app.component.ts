@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { DatabaseProvider } from '../providers/database/database'
 import { HomePage } from '../pages/home/home';
 import { EventPage } from '../pages/events/events';
 import { CreationPage } from '../pages/creation/creation';
@@ -25,7 +25,7 @@ export class MyApp {
   chosenMinutes: number;
 
 
-  constructor(public platform: Platform, public localNotifications: LocalNotifications,public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform,public databaseProvider: DatabaseProvider, public localNotifications: LocalNotifications,public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -46,6 +46,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.databaseProvider.init();
     });
   }
 

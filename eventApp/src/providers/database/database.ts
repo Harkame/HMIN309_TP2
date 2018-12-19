@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
-import { ToastController } from 'ionic-angular';
+import { ToastController, DateTime } from 'ionic-angular';
 
 import {Event} from '../../models/Event'
 
@@ -28,6 +28,9 @@ export class DatabaseProvider
         })
         .catch(error => console.error('ERROR : ' + error));
     }
+  }
+  init(){
+    
   }
 
   insertEvent(event : Event)
@@ -61,7 +64,7 @@ export class DatabaseProvider
   selectEventsByType(events, type)
   {
     if(this.sqlite != undefined)
-      this.database.executeSql("SELECT * FROM Events WHERE event_type = " + type + ";", []).then((data) => {
+      this.database.executeSql('SELECT * FROM Events WHERE event_type = \''+ type +'\' ;', []).then((data) => {
         for (var i = 0; i < data.rows.length; i++)
         {
           console.log("event_name : " + data.rows.item(i).event_name);
@@ -86,8 +89,15 @@ export class DatabaseProvider
 
   selectEventsByDate(events, date)
   {
+    console.log("date in db : " + date.toString());
+    let date_splited = date.toString().split("/", 3);
+    console.log("date_splited : " + date_splited.toString());
+
+    let searched_date = date_splited[2] + "-" + date_splited[1] + "-" + date_splited[0];
+    console.log("searched_date : " + searched_date.toString());
+
     if(this.sqlite != undefined)
-      this.database.executeSql("SELECT * FROM Events WHERE event_date = " + date + ";", []).then((data) => {
+      this.database.executeSql('SELECT * FROM Events WHERE event_date = \'' + searched_date + '\';', []).then((data) => {
         for (var i = 0; i < data.rows.length; i++)
         {
           console.log("event_name : " + data.rows.item(i).event_name);
@@ -153,7 +163,7 @@ export class DatabaseProvider
 
   selectEventsOfToday(items){
     let date = new Date();
-    let date_of_day = date.getDate + "/" + date.getMonth + "/" + date.getFullYear;
+    let date_of_day = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() ;
 
     this.database.executeSql('SELECT * FROM Events WHERE \'' + date_of_day + '\' = event_date', []).then((data) => {
       for (var i = 0; i < data.rows.length; i++)

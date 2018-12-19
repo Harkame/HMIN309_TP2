@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Antho\\Desktop\\GIT\\HMIN309_TP2\\myApp\\platforms\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh-rHK\\values-zh-rHK.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Antho\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\5358eafd4e92272dfb9fa500b5cf12ad\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "101",
+                        "endOffsets": "152"
+                    }
+                }
+            ]
+        }
+    ]
+}

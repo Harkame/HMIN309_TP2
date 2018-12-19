@@ -35,15 +35,20 @@ export class EventSearchedPage {
     console.log("Searched Types : " + this.searchedType);
     console.log("data : " + this.data);
 
-    this.eventProvider.setEventsByType(this.searchedType, this.data);
-    this.events = this.eventProvider.getEvents()
-
     console.log("set Events by Types");
-    console.log("events : " + this.events);
+    this.eventProvider.setEventsByType(this.searchedType, this.data).then(val => {
+        this.events = val;
 
-    if(this.events == undefined || this.events.length == 0){
-      this.test = true;
-    }
+        console.log('WTFFFF : ' + this.events.length)
+        /*
+        if(this.events.length === 0){
+          this.test = true;
+        }
+        */
+    });
+    
+    
+
   }
 
   ionViewDidLoad()
