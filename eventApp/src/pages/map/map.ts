@@ -1,6 +1,5 @@
 import { Event } from '../../models/Event'
 
-import { DatabaseProvider } from '../../providers/database/database'
 import { AddressProvider } from '../../providers/address/address';
 
 import { Component } from '@angular/core';
@@ -14,7 +13,7 @@ export class MapPage
 {
   private event : Event;
 
-  constructor(private navController : NavController, private navParams : NavParams, private events: Events, private addressProvider : AddressProvider, private databaseProvider : DatabaseProvider)
+  constructor(private navController : NavController, private navParams : NavParams, private events: Events, private addressProvider : AddressProvider)
   {
   }
 

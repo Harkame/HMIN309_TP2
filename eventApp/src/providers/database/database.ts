@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
-import { ToastController, DateTime } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 
 import {Event} from '../../models/Event'
 
@@ -29,6 +29,7 @@ export class DatabaseProvider
         .catch(error => console.error('ERROR : ' + error));
     }
   }
+  
   init(){
     
   }

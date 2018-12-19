@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DatabaseProvider } from '../../providers/database/database'
 import { EventsSearchedProviders } from '../../providers/events_searched/events_searched';
 import { DescriptionPage } from '../description/description';
 import { Event } from '../../models/Event'
@@ -22,7 +21,7 @@ export class EventSearchedPage {
   data:any;
   test: boolean = false;
 
-  constructor(private eventProvider:EventsSearchedProviders ,private navParams: NavParams, private navController: NavController, private databaseProvider: DatabaseProvider)
+  constructor(private eventProvider:EventsSearchedProviders ,private navParams: NavParams, private navController: NavController)
   {
 
   }

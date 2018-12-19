@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { DatabaseProvider } from '../../providers/database/database';
-import { Observable } from 'rxjs';
  
 @Injectable()
 export class EventsSearchedProviders {

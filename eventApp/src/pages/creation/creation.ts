@@ -7,7 +7,7 @@ import { DatabaseProvider } from '../../providers/database/database'
 import { EventsTypesProvider } from '../../providers/events_types/events-types';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, Events } from 'ionic-angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -27,7 +27,7 @@ export class CreationPage
 
   private eventsTypes : string[];
 
-  constructor(private navController: NavController, private navParams : NavParams, private events: Events, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private geolocation : Geolocation)
+  constructor(private navController: NavController, private events: Events, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private geolocation : Geolocation)
   {
     this.event = new Event();
 
