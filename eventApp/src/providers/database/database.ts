@@ -29,16 +29,16 @@ export class DatabaseProvider
         .catch(error => console.error('ERROR : ' + error));
     }
   }
-  
+
   init(){
-    
+
   }
 
   insertEvent(event : Event)
   {
     if(this.database != undefined)
     {
-      let sqlRequest = 'INSERT INTO Events (event_name, event_date, event_type, event_description, event_latitude, event_longitude, event_address, event_file_url) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', \'' + event.latitude + '\', \'' + event.longitude + '\', \'' + event.address+ '\', \'' + event.fileURL +  '\');';
+      let sqlRequest = 'INSERT INTO Events (event_name, event_date, event_type, event_description, event_latitude, event_longitude, event_address, event_file_url) VALUES (\'' + event.name + '\', \'' + event.date + '\', \'' + event.type + '\', \'' + event.description + '\', ' + event.latitude + ', ' + event.longitude + ', \'' + event.address+ '\', \'' + event.fileURL +  '\');';
 
       console.log(sqlRequest);
 
