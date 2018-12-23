@@ -14,24 +14,21 @@ export class DatabaseProvider
 
   constructor(private sqlite: SQLite, private toastCtrl: ToastController)
   {
-    if(this.sqlite != undefined)
-    {
-      this.sqlite.create({
-        name: DATABASE_FILE_NAME,
-        location: 'default'
-      })
-        .then((database: SQLiteObject) => {
-          this.database = database;
-
-          this.database.executeSql('CREATE TABLE IF NOT EXISTS Events (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude REAL, event_longitude REAL, event_address TEXT, event_file_url TEXT);', [])
-          .then(() => console.log('Table Events created'))
-        })
-        .catch(error => console.error('ERROR : ' + error));
-    }
   }
 
-  init(){
+  initialize()
+  {
+    this.sqlite.create({
+      name: DATABASE_FILE_NAME,
+      location: 'default'
+    })
+      .then((database: SQLiteObject) => {
+        this.database = database;
 
+        this.database.executeSql('CREATE TABLE IF NOT EXISTS Events (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, event_name TEXT, event_date TEXT, event_type TEXT, event_description TEXT, event_latitude REAL, event_longitude REAL, event_address TEXT, event_file_url TEXT);', [])
+        .then(() => console.log('Table Events created'))
+      })
+      .catch(error => console.error('ERROR : ' + error));
   }
 
   insertEvent(event : Event)
