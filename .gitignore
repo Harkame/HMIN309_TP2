@@ -8,7 +8,7 @@ log.txt
 *.sublime-workspace
 .vscode/
 npm-debug.log*
-
+platforms/
 .idea/
 .ionic/
 .sourcemaps/
@@ -18,6 +18,7 @@ npm-debug.log*
 coverage/
 dist/
 node_modules/
+!node_modules/typescript
 tmp/
 temp/
 platforms/android/.gradle
