@@ -1,0 +1,7 @@
+{
+  "name": "HMIN309_TP2_SportApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
