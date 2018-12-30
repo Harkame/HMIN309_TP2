@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="fr.harkame.eventapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>HMIN309_TP2_EventApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
-    <access origin="*" />
+    <access launch-external="yes" origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -85,7 +85,6 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-android-permissions" spec="1.0.0" />
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
-    <plugin name="de.appplant.cordova.plugin.local-notification" spec="0.8.5" />
     <plugin name="cordova-android-support-gradle-release" spec="^2.0.1">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
@@ -95,6 +94,11 @@
         <variable name="PLAY_SERVICES_VERSION" value="15.0.1" />
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
+    <plugin name="cordova-plugin-local-notification" spec="0.9.0-beta.2" />
+    <plugin name="cordova-plugin-app-launcher" spec="https://github.com/nchutchind/cordova-plugin-app-launcher.git" />
+    <feature name="Launcher">
+        <param name="android-package" value="com.hutchind.cordova.plugins.launcher.Launcher" />
+    </feature>
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.1.1" />
 </widget>

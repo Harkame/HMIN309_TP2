@@ -46,7 +46,7 @@
 
     <ion-item *ngIf="eventNotificationActived">
       <ion-label>Notify me at: </ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="eventTime"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.time"></ion-datetime>
     </ion-item>
 
     <ion-item (click)="takePicture()">

@@ -17,3 +17,23 @@ cordova plugin add https://github.com/mapsplugin/cordova-plugin-googlemaps#multi
 npm install rxjs@6 rxjs-compat@6 --save
 
 https://forum.ionicframework.com/t/local-notifications-with-multiple-actions-buttons/33430/4é
+
+https://stackoverflow.com/questions/49077530/select-date-and-time-in-2-steps-using-ionic-datetime
+
+https://forum.ionicframework.com/t/local-notification-doesnt-work/126833
+
+https://github.com/husainsr/Ionic3_Notification
+
+https://github.com/katzer/cordova-plugin-local-notifications/issues/1449
+
+https://github.com/katzer/cordova-plugin-local-notifications/issues/1446
+
+https://forum.ionicframework.com/t/localnotifications-firstat-is-not-working-with-every/132748
+
+https://github.com/katzer/cordova-plugin-local-notifications
+
+TO CHECK
+
+https://www.npmjs.com/package/cordova-plugin-app-launcher
+
+https://github.com/nchutchind/cordova-plugin-app-launcher

@@ -15,6 +15,11 @@ import { File } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import * as moment from 'moment';
+
+declare var cordova;
+declare var window;
+
 @IonicPage()
 @Component({
   selector: 'page-creation',
@@ -26,6 +31,8 @@ export class CreationPage
   private event : Event;
 
   private eventsTypes : string[];
+
+  private minimumDate : Date;
 
   constructor(private navController: NavController, private events: Events, private localNotifications: LocalNotifications, private databaseProvider: DatabaseProvider, private androidPermissions: AndroidPermissions, private toastCtrl: ToastController, private camera: Camera, private file: File, private geolocation : Geolocation)
   {
@@ -43,7 +50,12 @@ export class CreationPage
       this.event.latitude = pos.coords.latitude;
       this.event.longitude = pos.coords.longitude;
     });
+
+    let hours = new Date().getHours() + 1;
+    let minutes = new Date().getMinutes() + 2;
+    this.event.time = hours + ':' + minutes;
   }
+
 
   create(eventGeolocationActived, eventNotificationActived)
   {
@@ -106,18 +118,11 @@ export class CreationPage
 
   addNotification()
   {
-    let eventDateTime = new Date(this.event.date + " " + this.event.time);
+    let eventDateTime = new Date(this.event.date + ' ' + this.event.time + ':00');
 
-    console.log("eventDateTime : " + eventDateTime);
+    console.log('eventDateTime : ' + eventDateTime);
 
-    let notification =
-    {
-      title: 'Rappel !',
-      text: 'Vous avez un evenements aujourd\'hui ' + this.event.name,
-      trigger: {at: eventDateTime}
-    };
-
-    this.localNotifications.schedule(notification);
+    this.createNotification(eventDateTime.getTime());
   }
 
   getGeolocation()
@@ -133,5 +138,115 @@ export class CreationPage
     {
       event : this.event
     });
+  }
+
+  createNotification(notificationDateTime)
+  {
+    let notificationId = new Date().getUTCMilliseconds();
+
+    console.log('totaltime : ' + notificationDateTime);
+
+    let notification =
+    {
+      id : notificationId,
+      title: 'Event !',
+      text: this.event.name,
+      trigger : {at : notificationDateTime},
+      actions : null
+      /*actions :
+      [
+       { id: 'report_short', title: 'Report 10 m' },
+       { id: 'report_long', title: 'Report 1 h' },
+       { id: 'start_sport_activity',  title: 'Start sport activity' }
+      ]
+      */
+    };
+
+    let actionReportShort = { id: 'report_short', title: 'Report 10 m' };
+    let actionReportLong = { id: 'report_long', title: 'Report 1 h' };
+    let actionSportActivity = { id: 'start_sport_activity',  title: 'Start sport activity' };
+
+    if(this.event.type === 'Sport')
+      notification.actions = [actionReportShort, actionReportLong, actionSportActivity];
+    else
+      notification.actions = [actionReportShort, actionReportLong];
+
+    this.localNotifications.on("report_short").subscribe(notification => {
+      console.log("report_short");
+
+      this.createReportedNotification(5);
+    });
+
+    this.localNotifications.on("report_long").subscribe(notification =>{
+      console.log("report_long")
+
+      this.createReportedNotification(60);
+    });
+
+    this.localNotifications.on("start_sport_activity").subscribe(notification => {
+      console.log("start_sport_activity");
+      
+      var successCallback = function(data)
+      {
+        window.plugins.launcher.launch({packageName:'fr.harkame.sportapp'}, null, null);
+      };
+
+      var errorCallback = function(errMsg)
+      {
+        alert("errorCallback! " + errMsg);
+      }
+
+      window.plugins.launcher.canLaunch({packageName:'fr.harkame.sportapp'}, successCallback, errorCallback);
+    });
+
+    cordova.plugins.notification.local.schedule(notification);
+  }
+
+  createReportedNotification(reportTime)
+  {
+    let notificationId = new Date().getUTCMilliseconds();
+
+    let notification =
+    {
+      id : notificationId,
+      title: 'Event !',
+      text: this.event.name,
+      trigger: { in: reportTime, unit: 'minute' },
+      actions :
+      [
+       { id: 'report_short', title: 'Report 10 m' },
+       { id: 'report_long', title: 'Report 1 h' },
+       { id: 'start_sport_activity',  title: 'Start sport activity' }
+      ]
+    };
+
+    this.localNotifications.on("report_short").subscribe(notification => {
+      console.log("report_short");
+
+      this.createReportedNotification(5);
+    });
+
+    this.localNotifications.on("report_long").subscribe(notification =>{
+      console.log("report_long")
+
+      this.createReportedNotification(60);
+    });
+
+    this.localNotifications.on("start_sport_activity").subscribe(notification => {
+      console.log("start_sport_activity");
+      var successCallback = function(data)
+      {
+        window.plugins.launcher.launch({packageName:'fr.harkame.sportapp'}, null, null);
+      };
+
+      var errorCallback = function(errMsg)
+      {
+        alert("errorCallback! " + errMsg);
+      }
+
+      window.plugins.launcher.canLaunch({packageName:'fr.harkame.sportapp'}, successCallback, errorCallback);
+    });
+
+    cordova.plugins.notification.local.schedule(notification);
   }
 }
