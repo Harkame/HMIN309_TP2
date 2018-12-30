@@ -37,3 +37,5 @@ https://www.npmjs.com/package/cordova-plugin-app-launcher
 https://github.com/nchutchind/cordova-plugin-app-launcher
 
 https://forum.ionicframework.com/t/latest-update-changed-local-notifications-plugin/127674
+
+https://stackoverflow.com/questions/48107624/i-want-to-install-two-ionic-app-into-my-phone-but-firstly-installed-ionic-app-ov
