@@ -51,8 +51,8 @@ export class CreationPage
       this.event.longitude = pos.coords.longitude;
     });
 
-    let hours = new Date().getHours() + 1;
-    let minutes = new Date().getMinutes() + 2;
+    let hours = new Date().getHours();
+    let minutes = new Date().getMinutes() + 1;
     this.event.time = hours + ':' + minutes;
   }
 
@@ -122,6 +122,8 @@ export class CreationPage
 
     console.log('eventDateTime : ' + eventDateTime);
 
+    this.event.dateTime = eventDateTime.getTime();
+
     this.createNotification(eventDateTime.getTime());
   }
 
@@ -153,13 +155,59 @@ export class CreationPage
       text: this.event.name,
       trigger : {at : notificationDateTime},
       actions : null
-      /*actions :
-      [
-       { id: 'report_short', title: 'Report 10 m' },
-       { id: 'report_long', title: 'Report 1 h' },
-       { id: 'start_sport_activity',  title: 'Start sport activity' }
-      ]
-      */
+    };
+
+    let actionReport = { id: 'report', title: 'Report'};
+    let actionSportActivity = { id: 'start_sport_activity',  title: 'Start sport activity' };
+
+    if(this.event.type === 'Sport')
+      notification.actions = [actionReport, actionSportActivity];
+    else
+      notification.actions = [actionReport];
+
+    this.localNotifications.on("report_short").subscribe(notification => {
+      console.log("report_short");
+
+      this.createReportedNotification(5);
+    });
+
+    this.localNotifications.on("report_long").subscribe(notification =>{
+      console.log("report_long")
+
+      this.createReportedNotification(60);
+    });
+
+    if(this.event.type === 'Sport')
+      this.localNotifications.on("start_sport_activity").subscribe(notification => {
+        console.log("start_sport_activity");
+
+        var successCallback = function(data)
+        {
+          window.plugins.launcher.launch({packageName:'fr.harkame.sportapp'}, null, null);
+        };
+
+        var errorCallback = function(errMsg)
+        {
+          alert("errorCallback! " + errMsg);
+        }
+
+        window.plugins.launcher.canLaunch({packageName:'fr.harkame.sportapp'}, successCallback, errorCallback);
+      });
+
+    cordova.plugins.notification.local.schedule(notification);
+  }
+
+  createReportedNotification(reportTime)
+  {
+    let notificationId = new Date().getUTCMilliseconds();
+
+    let notification =
+    {
+      id : notificationId,
+      title: 'Event !',
+      text: this.event.name,
+      trigger: { in: reportTime, unit: 'second' },
+      actions : null
     };
 
     let actionReportShort = { id: 'report_short', title: 'Report 10 m' };
@@ -183,69 +231,21 @@ export class CreationPage
       this.createReportedNotification(60);
     });
 
-    this.localNotifications.on("start_sport_activity").subscribe(notification => {
-      console.log("start_sport_activity");
-      
-      var successCallback = function(data)
-      {
-        window.plugins.launcher.launch({packageName:'fr.harkame.sportapp'}, null, null);
-      };
+    if(this.event.type === 'Sport')
+      this.localNotifications.on("start_sport_activity").subscribe(notification => {
+        console.log("start_sport_activity");
+        var successCallback = function(data)
+        {
+          window.plugins.launcher.launch({packageName:'fr.harkame.sportapp'}, null, null);
+        };
 
-      var errorCallback = function(errMsg)
-      {
-        alert("errorCallback! " + errMsg);
-      }
+        var errorCallback = function(errMsg)
+        {
+          alert("errorCallback! " + errMsg);
+        }
 
-      window.plugins.launcher.canLaunch({packageName:'fr.harkame.sportapp'}, successCallback, errorCallback);
-    });
-
-    cordova.plugins.notification.local.schedule(notification);
-  }
-
-  createReportedNotification(reportTime)
-  {
-    let notificationId = new Date().getUTCMilliseconds();
-
-    let notification =
-    {
-      id : notificationId,
-      title: 'Event !',
-      text: this.event.name,
-      trigger: { in: reportTime, unit: 'minute' },
-      actions :
-      [
-       { id: 'report_short', title: 'Report 10 m' },
-       { id: 'report_long', title: 'Report 1 h' },
-       { id: 'start_sport_activity',  title: 'Start sport activity' }
-      ]
-    };
-
-    this.localNotifications.on("report_short").subscribe(notification => {
-      console.log("report_short");
-
-      this.createReportedNotification(5);
-    });
-
-    this.localNotifications.on("report_long").subscribe(notification =>{
-      console.log("report_long")
-
-      this.createReportedNotification(60);
-    });
-
-    this.localNotifications.on("start_sport_activity").subscribe(notification => {
-      console.log("start_sport_activity");
-      var successCallback = function(data)
-      {
-        window.plugins.launcher.launch({packageName:'fr.harkame.sportapp'}, null, null);
-      };
-
-      var errorCallback = function(errMsg)
-      {
-        alert("errorCallback! " + errMsg);
-      }
-
-      window.plugins.launcher.canLaunch({packageName:'fr.harkame.sportapp'}, successCallback, errorCallback);
-    });
+        window.plugins.launcher.canLaunch({packageName:'fr.harkame.sportapp'}, successCallback, errorCallback);
+      });
 
     cordova.plugins.notification.local.schedule(notification);
   }

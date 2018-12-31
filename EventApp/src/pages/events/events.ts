@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 
 import { DatabaseProvider } from '../../providers/database/database'
 
@@ -15,7 +15,7 @@ export class EventPage
 {
   events: Array<Event>;
 
-  constructor(private navController: NavController, private databaseProvider: DatabaseProvider)
+  constructor(private navController: NavController, private databaseProvider: DatabaseProvider, private eventsA: Events)
   {
   }
 
@@ -28,6 +28,15 @@ export class EventPage
 
   itemTapped(event)
   {
+    this.eventsA.subscribe('removeEvent', (paramsVar) =>
+    {
+      let eventId = paramsVar;
+
+      this.events.splice(this.events.findIndex(event => event.id === eventId), 1)
+
+      this.eventsA.unsubscribe('removeEvent');
+    });
+
     this.navController.push(DescriptionPage,
     {
       event : event

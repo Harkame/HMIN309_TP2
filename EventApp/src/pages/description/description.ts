@@ -4,7 +4,7 @@ import { EventsTypesProvider } from '../../providers/events_types/events-types';
 import { DatabaseProvider } from '../../providers/database/database'
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,7 +17,7 @@ export class DescriptionPage
   private event : Event
   private eventsTypes : string[];
 
-  constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider)
+  constructor(private navController: NavController, private navParams: NavParams, private databaseProvider: DatabaseProvider, private events: Events)
   {
     this.eventsTypes = EventsTypesProvider.getTypes();
   }
@@ -40,6 +40,9 @@ export class DescriptionPage
   {
     this.databaseProvider.removeEvent(this.event.id);
 
-    this.navController.pop();
+    this.navController.pop().then(() =>
+    {
+      this.events.publish('removeEvent', this.event.id);
+    });
   }
 }

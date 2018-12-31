@@ -3,6 +3,7 @@ export class Event
   public id: any;
   public name: string = '';
   public date: string;
+  public dateTime: number = 0;
   public time: string;
   public type: string = '';
   public description: string = '';
