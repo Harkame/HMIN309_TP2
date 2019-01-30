@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Creation</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+     <ion-item>
+      <ion-label color="primary">Name</ion-label>
+      <ion-input [(ngModel)]="event.name" type="text" name="name" placeholder="Example : Footing"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime [(ngModel)]="event.date" displayFormat="DD/MM/YYYY" pickerFormat="D MMMM YYYY"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Type</ion-label>
+      <ion-select [(ngModel)]="event.type" name="type">
+          <ion-option *ngFor="let eventType of eventsTypes" [value]="eventType">{{ eventType }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Description</ion-label>
+      <ion-input [(ngModel)]="event.description" placeholder="Example : 10KM"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <button name="button_geolocation" (click)="getGeolocation()" ion-button>Geolocation</button>
+    </ion-item>
+
+    <ion-content class="home">
+      <div style="height: 100%;" id="map_canvas"></div>
+    </ion-content>
+
+    <ion-item>
+      <ion-label>Notify me ?</ion-label>
+      <ion-checkbox [(ngModel)]="eventNotificationActived" color="primary"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="eventNotificationActived">
+      <ion-label>Notify me at: </ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.time"></ion-datetime>
+    </ion-item>
+
+    <ion-item (click)="takePicture()">
+      Take Picture
+      <ion-icon
+        item-right name="camera">
+      </ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="event.fileURL != ''">
+        <img [src]="event.fileURL" style="max-width: 100%;">
+    </ion-item>
+
+    <ion-item>
+      <button name="button_creation" (click)="create(eventGeolocationActived, eventNotificationActived)" ion-button>Create</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
