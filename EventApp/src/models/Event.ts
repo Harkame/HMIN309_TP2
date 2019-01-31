@@ -18,7 +18,5 @@ export class Event
 
     constructor()
     {
-      this.latitude = 48.856614;
-      this.longitude = 2.3522219;
     }
 }

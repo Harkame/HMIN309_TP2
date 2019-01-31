@@ -18,12 +18,12 @@
       </ion-item>
     </ion-item>
     <ion-item>
+      <button ion-button full large color="success" (click)="dismiss()">Validate</button>
+    </ion-item>
+    <ion-item>
       <agm-map [latitude]="event.latitude" [longitude]="event.longitude">
         <agm-marker [latitude]="event.latitude" [longitude]="event.longitude"></agm-marker>
       </agm-map>
-    </ion-item>
-    <ion-item>
-      <button ion-button full large color="success" (click)="dismiss()">Validate</button>
     </ion-item>
   </ion-list>
 </ion-content>

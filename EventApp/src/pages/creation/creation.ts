@@ -85,6 +85,15 @@ export class CreationPage
       return;
     }
 
+    if(!eventNotificationActived)
+      this.event.time = '00:00';
+
+    let eventDateTime = new Date(this.event.date + ' ' + this.event.time + ':00');
+
+    console.log('eventDateTime : ' + eventDateTime);
+
+    this.event.dateTime = eventDateTime.getTime();
+
     if(eventNotificationActived)
       this.addNotification();
 
@@ -118,13 +127,7 @@ export class CreationPage
 
   addNotification()
   {
-    let eventDateTime = new Date(this.event.date + ' ' + this.event.time + ':00');
-
-    console.log('eventDateTime : ' + eventDateTime);
-
-    this.event.dateTime = eventDateTime.getTime();
-
-    this.createNotification(eventDateTime.getTime());
+    this.createNotification(this.event.dateTime);
   }
 
   getGeolocation()
@@ -163,9 +166,9 @@ export class CreationPage
     let actionCustomReport = {id: 'custom_report', type: 'input', title: 'Custom report', emptyText: 'Type message'};
 
     if(this.event.type === 'Sport')
-      notification.actions = [actionReportShort, actionReportLong, actionSportActivity, actionCustomReport];
+      notification.actions = [actionReportShort, actionSportActivity, actionCustomReport];
     else
-      notification.actions = [actionReportShort, actionReportLong, actionCustomReport];
+      notification.actions = [actionReportShort, actionCustomReport];
 
     this.localNotifications.on("report_short").subscribe(notification => {
       console.log("report_short");
@@ -218,9 +221,9 @@ export class CreationPage
     let actionCustomReport = {id: 'custom_report', type: 'input', title: 'Custom report', emptyText: 'Type message'};
 
     if(this.event.type === 'Sport')
-      notification.actions = [actionReportShort, actionReportLong, actionSportActivity, actionCustomReport];
+      notification.actions = [actionReportShort, actionSportActivity, actionCustomReport];
     else
-      notification.actions = [actionReportShort, actionReportLong, actionCustomReport];
+      notification.actions = [actionReportShort, actionCustomReport];
 
     this.localNotifications.on("report_short").subscribe(notification => {
       console.log("report_short");
