@@ -157,13 +157,15 @@ export class CreationPage
       actions : null
     };
 
-    let actionReport = { id: 'report', title: 'Report'};
+    let actionReportShort = { id: 'report_short', title: 'Report 10 m' };
+    let actionReportLong = { id: 'report_long', title: 'Report 1 h' };
     let actionSportActivity = { id: 'start_sport_activity',  title: 'Start sport activity' };
+    let actionCustomReport = {id: 'custom_report', type: 'input', title: 'Custom report', emptyText: 'Type message'};
 
     if(this.event.type === 'Sport')
-      notification.actions = [actionReport, actionSportActivity];
+      notification.actions = [actionReportShort, actionReportLong, actionSportActivity, actionCustomReport];
     else
-      notification.actions = [actionReport];
+      notification.actions = [actionReportShort, actionReportLong, actionCustomReport];
 
     this.localNotifications.on("report_short").subscribe(notification => {
       console.log("report_short");
@@ -213,11 +215,12 @@ export class CreationPage
     let actionReportShort = { id: 'report_short', title: 'Report 10 m' };
     let actionReportLong = { id: 'report_long', title: 'Report 1 h' };
     let actionSportActivity = { id: 'start_sport_activity',  title: 'Start sport activity' };
+    let actionCustomReport = {id: 'custom_report', type: 'input', title: 'Custom report', emptyText: 'Type message'};
 
     if(this.event.type === 'Sport')
-      notification.actions = [actionReportShort, actionReportLong, actionSportActivity];
+      notification.actions = [actionReportShort, actionReportLong, actionSportActivity, actionCustomReport];
     else
-      notification.actions = [actionReportShort, actionReportLong];
+      notification.actions = [actionReportShort, actionReportLong, actionCustomReport];
 
     this.localNotifications.on("report_short").subscribe(notification => {
       console.log("report_short");

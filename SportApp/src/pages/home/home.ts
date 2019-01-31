@@ -21,31 +21,38 @@ export class HomePage
   {
   }
 
-  start()
+  click()
   {
     let task;
 
-    if(this.started == true)
+    if(this.started == false)
     {
-      clearInterval(task);
-      this.stepCounter.stop();
-      this.steps = 'Start';
-      this.started = false;
-    }
-    else
-    {
-      this.stepCounter.start(0).then(onSuccess => console.log('stepcounter-start success', onSuccess), onFailure => console.log('stepcounter-start error', onFailure));
+      this.steps = '0';
+
+      this.started = true;
+
+      this.stepCounter.start(0);
 
       task = setInterval(() => {
         this.getSteps();
-      }, 2000);
+      }, 1000);
+    }
+    else
+    {
+      this.stepCounter.stop();
 
-      this.started = true;
+      clearInterval(task);
+
+      this.steps = 'Start';
+
+      this.started = false;
     }
   }
 
+
   async getSteps()
   {
-    this.steps = (await this.stepCounter.getStepCount()).toString();
+    if(this.started == true)
+      this.steps = (await this.stepCounter.getStepCount()).toString();
   }
 }
